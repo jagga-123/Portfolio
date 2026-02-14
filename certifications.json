@@ -1,0 +1,25 @@
+{
+  "certifications": [
+    {
+      "title": "NPTEL - The joy of Computing using python",
+      "issuer": "NPTEL",
+      "date": "Apr 2025",
+      "score": "61/100",
+      "link": "#"
+    },
+    {
+      "title": "NPTEL - Introduction to operating system",
+      "issuer": "NPTEL",
+      "date": "Sep 2025",
+      "score": "52/100",
+      "link": "#"
+    },
+    {
+      "title": "Python Bootcamp in College",
+      "issuer": "Local",
+      "date": "2024",
+      "score": "-",
+      "link": "#"
+    }
+  ]
+}

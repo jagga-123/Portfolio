@@ -1,0 +1,10 @@
+[
+  {"name":"Weather Forecast Application","desc":"Real-time weather app using RapidAPI, dynamic UI and responsive design","url":"https://github.com/jagga-123/Weather-Forecast-Application","topics":["web","api","javascript"]},
+  {"name":"Amazon Clone","desc":"E-commerce UI with cart functionality built with HTML/CSS/JS","url":"https://github.com/jagga-123/amazon-clone","topics":["web","frontend"]},
+  {"name":"Personal Portfolio Website","desc":"Portfolio showcasing projects and skills; responsive and interactive","url":"https://github.com/jagga-123/portfolio","topics":["web","frontend"]},
+  {"name":"Binance Futures Testnet Trading Bot","desc":"Python CLI trading bot for Binance Futures Testnet (USDT-M)","url":"https://github.com/jagga-123/binance-futures-testnet-bot-python","topics":["automation","python"]},
+  {"name":"maska-product-ui","desc":"Product UI built as a design-to-code exercise","url":"https://github.com/jagga-123/maska-product-ui","topics":["web","design"]},
+  {"name":"AI Website emotion detector","desc":"Web demo using ML models to detect emotions from images","url":"https://github.com/jagga-123/ai-emotion-detector","topics":["ai","web"]},
+  {"name":"IoT-Sensor-Hub","desc":"ESP32/Arduino project collecting sensor data and sending to cloud","url":"https://github.com/jagga-123/iot-sensor-hub","topics":["iot","esp32"]},
+  {"name":"Portfolio-v2","desc":"Updated personal site with animations and A/B experiments","url":"https://github.com/jagga-123/portfolio-v2","topics":["web","react"]}
+]

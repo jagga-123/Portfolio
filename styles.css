@@ -1,0 +1,160 @@
+/* Basic theme variables (modern palette) */
+:root {
+    --bg: #F8FAFF;
+    --muted: #64748B;
+    --accent: #4F46E5;
+    --accent2: #06B6D4;
+    --accent3: #F97316;
+    --card: #FFFFFF;
+    --text: #0B1220
+}
+
+[data-theme='dark'] {
+    --bg: #0b1020;
+    --muted: #9FB4C7;
+    --accent: #7C3AED;
+    --accent2: #06B6D4;
+    --accent3: #F97316;
+    --card: #0b1220;
+    --text: #E6EEF8
+}
+
+html,
+body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--text);
+}
+
+body {
+    font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans';
+}
+
+/* Buttons */
+.btn-primary {
+    background: var(--accent);
+    color: #fff;
+    padding: .6rem 1rem;
+    border-radius: .6rem;
+    font-weight: 600
+}
+
+.btn-outline {
+    border: 1px solid var(--accent);
+    padding: .6rem 1rem;
+    border-radius: .6rem;
+    color: var(--accent);
+    background: transparent;
+    transition: all 0.3s ease
+}
+
+.btn-ghost {
+    background: transparent;
+    border: 1px solid transparent;
+    padding: .6rem 1rem;
+    border-radius: .6rem
+}
+
+/* Cards and chips */
+.card {
+    background: var(--card);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(2, 6, 23, 0.06);
+    color: inherit
+}
+
+.chip {
+    background: linear-gradient(90deg, #eef2ff, #f0f9ff);
+    padding: .35rem .6rem;
+    border-radius: 999px;
+    font-size: .85rem;
+    color: #0f172a
+}
+
+.input {
+    width: 100%;
+    padding: .7rem;
+    border-radius: .6rem;
+    border: 1px solid #e6edf3;
+    background: white
+}
+
+.timeline-item {
+    background: transparent;
+    padding: .75rem;
+    border-left: 3px solid var(--accent);
+    padding-left: 1rem
+}
+
+/* Accessibility focus */
+:focus {
+    outline: 3px solid rgba(37, 99, 235, 0.18);
+    outline-offset: 2px
+}
+
+/* Small utilities */
+.text-slate-600 {
+    color: #475569
+}
+
+.text-slate-500 {
+    color: #6b7280
+}
+
+/* Mobile menu */
+.mobile-nav {
+    position: fixed;
+    inset: 60px 16px 16px 16px;
+    background: var(--card);
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(2, 6, 23, 0.2)
+}
+
+/* responsive tweaks for hero */
+@media (max-width:640px) {
+    h1 {
+        font-size: 2rem
+    }
+}
+
+/* small SVG placeholder sizing */
+.asset-svg {
+    width: 100%;
+    height: auto
+}
+
+/* dark-mode specific overrides */
+[data-theme='dark'] body {
+    background: var(--bg);
+    color: #cbd5e1
+}
+
+[data-theme='dark'] .card {
+    background: var(--card)
+}
+
+/* project card */
+.project-card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(250, 250, 250, 0.6));
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 30px rgba(2, 6, 23, 0.06)
+}
+
+/* small loader */
+.loader {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 3px solid #e5e7eb;
+    border-top-color: var(--accent);
+    animation: spin 1s linear infinite
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg)
+    }
+}
