@@ -25,20 +25,20 @@ DEPLOYMENT CHECKLIST:
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Sandeep Kumar — IoT & AI/ML Developer</title>
+    <title>Sandeep Kumar — Full Stack Developer</title>
     <meta name="description"
-        content="Sandeep Kumar — IoT & AI/ML Developer and Full-Stack Engineer. CSE student at GEC Khagaria building intelligent systems and web applications." />
+        content="Sandeep Kumar — Full Stack Developer and CSE graduate from Government Engineering College Khagaria. Building modern web applications with MERN stack and Next.js." />
     <meta name="keywords"
-        content="Sandeep Kumar, IoT developer, AI ML, full stack, React.js, ESP32, portfolio, GEC Khagaria" />
+        content="Sandeep Kumar, Full Stack Developer, MERN Stack, React.js, Node.js, Next.js, JavaScript, TypeScript, MongoDB, portfolio, GEC Khagaria" />
     <meta name="author" content="Sandeep Kumar" />
-    <meta property="og:title" content="Sandeep Kumar — IoT & AI/ML Developer" />
+    <meta property="og:title" content="Sandeep Kumar — Full Stack Developer" />
     <meta property="og:description" content="Daily learner. Practical explorer. Technology builder." />
     <meta property="og:type" content="website" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Sandeep Kumar — Portfolio" />
     <meta property="og:site_name" content="Sandeep Kumar — Portfolio" />
     <script type="application/ld+json">
-  {"@context":"https://schema.org","@type":"Person","name":"Sandeep Kumar","email":"sandeeppal321ku@gmail.com","url":"https://github.com/jagga-123","jobTitle":"IoT & AI/ML Developer","alumniOf":"Government Engineering College Khagaria"}
+  {"@context":"https://schema.org","@type":"Person","name":"Sandeep Kumar","email":"sandeeppal321ku@gmail.com","url":"https://github.com/jagga-123","jobTitle":"Full Stack Developer","alumniOf":"Government Engineering College Khagaria"}
   </script>
 
     <!-- Preconnect for Google Fonts -->
@@ -1566,9 +1566,13 @@ DEPLOYMENT CHECKLIST:
             color: var(--accent)
         }
     </style>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true">
+        <span></span>
+    </div>
 
     <header class="nav" role="banner">
         <div class="nav-inner container">
@@ -1611,6 +1615,7 @@ DEPLOYMENT CHECKLIST:
     <main style="padding-top:88px">
         <section id="home" class="hero">
             <canvas id="hero-canvas" class="hero-canvas" aria-hidden="true"></canvas>
+            <div class="hero-particles" aria-hidden="true"></div>
             <div class="hero-content container">
                 <div class="eyebrow fade-up delay-1">Hello, World!</div>
                 <h1 class="hero-name fade-up delay-2">
@@ -1618,13 +1623,31 @@ DEPLOYMENT CHECKLIST:
                     <div class="solid">KUMAR</div>
                 </h1>
 
+                <div class="hero-badge-row fade-up delay-2">
+                    <span class="open-badge">Currently Open to Internships</span>
+                </div>
+
                 <div class="role fade-up delay-3" aria-live="polite">
                     <span id="roleText"></span><span class="cursor">|</span>
                 </div>
 
                 <div class="tagline fade-up delay-3">"Daily learner. Practical explorer. Technology builder."</div>
 
-                <div class="cta-row fade-up delay-4">
+                <div class="hero-terminal fade-up delay-4" aria-label="Animated terminal">
+                    <div class="terminal-topbar">
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-dot"></span>
+                        <span class="terminal-title">portfolio.sh</span>
+                    </div>
+                    <div class="terminal-line">
+                        <span class="terminal-prompt">$</span>
+                        <span id="terminalText"></span>
+                        <span class="terminal-caret">▍</span>
+                    </div>
+                </div>
+
+                <div class="cta-row fade-up delay-5">
                     <a href="#projects" class="btn-hero btn-primary-hero"
                         style="position:relative;display:inline-block">View Projects</a>
                     <a href="#contact" class="btn-hero btn-outline-hero">Contact Me</a>
@@ -1632,21 +1655,30 @@ DEPLOYMENT CHECKLIST:
                         class="btn-hero btn-outline-hero">Download Resume</a>
                 </div>
 
-                <div class="stats fade-up delay-5" id="hero-stats">
+                <div class="hero-chip-cloud" aria-hidden="true">
+                    <span>React.js</span>
+                    <span>Node.js</span>
+                    <span>Express</span>
+                    <span>MongoDB</span>
+                    <span>Next.js</span>
+                    <span>TypeScript</span>
+                </div>
+
+                <div class="stats fade-up delay-6" id="hero-stats">
                     <div class="stat">
-                        <div class="num" data-target="8">0+</div>
+                        <div class="num count-up" data-count-target="10" data-count-suffix="+">0+</div>
                         <div class="label">Projects</div>
                     </div>
                     <div class="stat">
-                        <div class="num" data-target="20">0+</div>
+                        <div class="num count-up" data-count-target="15" data-count-suffix="+">0+</div>
                         <div class="label">Technologies</div>
                     </div>
                     <div class="stat">
-                        <div class="num" data-target="3">0</div>
+                        <div class="num count-up" data-count-target="3">0</div>
                         <div class="label">Certifications</div>
                     </div>
                     <div class="stat">
-                        <div class="num" data-target="2">0</div>
+                        <div class="num count-up" data-count-target="1">0</div>
                         <div class="label">Internships</div>
                     </div>
                 </div>
@@ -1662,20 +1694,15 @@ DEPLOYMENT CHECKLIST:
             <div class="container">
                 <div class="section-tag reveal">01 — About Me</div>
                 <h2 id="about-title" class="section-title reveal">About Me</h2>
-                <p class="section-sub reveal">A quick introduction and the skills that power my projects.</p>
+                <p class="section-sub reveal">A quick introduction to my full-stack journey, now updated for graduate life.</p>
 
                 <div class="about-grid" style="margin-top:22px">
                     <div class="about-text reveal-left">
-                        <p>Computer Science & Engineering student at Government Engineering College, Khagaria,
-                            specializing in IoT and intelligent systems. I spend my days exploring emerging technologies
-                            hands-on — building Weather apps, AI Website emotion detectors, Binance Futures trading
-                            bots. From firmware to frontend, databases to deep learning, I thrive at the intersection of
-                            hardware and software.</p>
-                        <p>NPTEL certified in The Joy of Computing using Python (61/100). Actively building, breaking,
-                            and learning every day.</p>
+                        <p>Computer Science & Engineering graduate from Government Engineering College, Khagaria, with a strong focus on full stack web development. I build modern web applications using the MERN stack — from responsive frontend UIs in React to robust backend APIs with Node.js and Express.</p>
+                        <p>I specialize in creating full stack applications backed by MongoDB, MySQL, and PostgreSQL. NPTEL certified in The Joy of Computing using Python. Actively building, breaking, and learning every day.</p>
 
                         <div style="margin-top:14px">
-                            <div class="badge-current">Currently Learning: Advanced ML & Cloud IoT Architectures</div>
+                            <div class="badge-current">Graduate: Ready for Full Stack Roles, Internships & Freelance Work</div>
                         </div>
 
                         <div class="tech-wrap" aria-hidden="false">
@@ -1683,21 +1710,21 @@ DEPLOYMENT CHECKLIST:
                                 <span class="tech-chip">HTML</span>
                                 <span class="tech-chip">CSS</span>
                                 <span class="tech-chip">TAILWIND CSS</span>
-                                <span class="tech-chip">BOOTSTRAP</span>
                                 <span class="tech-chip">JAVASCRIPT</span>
                                 <span class="tech-chip">TYPESCRIPT</span>
                                 <span class="tech-chip">REACT.JS</span>
-                                <span class="tech-chip">PYTHON</span>
-                                <span class="tech-chip">ESP32</span>
-                                <span class="tech-chip">MONGODB</span>
-                                <span class="tech-chip">ARDUINO</span>
-                                <span class="tech-chip">SCIKIT-LEARN</span>
-                                <span class="tech-chip">GIT/GITHUB</span>
-                                <span class="tech-chip">MYSQL</span>
-                                <span class="tech-chip">RASPBERRY PI</span>
+                                <span class="tech-chip">NEXT.JS</span>
+                                <span class="tech-chip">NODE.JS</span>
+                                <span class="tech-chip">EXPRESS</span>
                                 <span class="tech-chip">REST API</span>
-                                <span class="tech-chip">ESP32</span>
-
+                                <span class="tech-chip">MONGODB</span>
+                                <span class="tech-chip">MYSQL</span>
+                                <span class="tech-chip">POSTGRESQL</span>
+                                <span class="tech-chip">GIT/GITHUB</span>
+                                <span class="tech-chip">VS CODE</span>
+                                <span class="tech-chip">NPM</span>
+                                <span class="tech-chip">VERCEL</span>
+                                <span class="tech-chip">NETLIFY</span>
                             </div>
                         </div>
                     </div>
@@ -1706,23 +1733,23 @@ DEPLOYMENT CHECKLIST:
                         <div class="about-cards">
                             <div class="detail-card">
                                 <div class="left-accent"></div>
-                                <h4><i class="fa-solid fa-code"></i>&nbsp;Full Stack</h4>
-                                <p>Building scalable web applications using React, Node.js, and modern databases.</p>
+                                <h4><i class="fa-solid fa-code"></i>&nbsp;Frontend</h4>
+                                <p>Building responsive UIs with React.js, Next.js, TypeScript, and Tailwind CSS for modern web applications.</p>
                             </div>
                             <div class="detail-card">
                                 <div class="left-accent"></div>
-                                <h4><i class="fa-solid fa-microchip"></i>&nbsp;IoT Embedded</h4>
-                                <p>Connecting physical devices to the cloud with ESP32, Arduino, and MQTT protocols.</p>
+                                <h4><i class="fa-solid fa-server"></i>&nbsp;Backend</h4>
+                                <p>Developing REST APIs with Node.js and Express, integrating with various databases for full stack solutions.</p>
                             </div>
                             <div class="detail-card">
                                 <div class="left-accent"></div>
-                                <h4><i class="fa-solid fa-brain"></i>&nbsp;AI / ML</h4>
-                                <p>Developing predictive models and intelligent systems using Python and TensorFlow.</p>
+                                <h4><i class="fa-solid fa-database"></i>&nbsp;Databases</h4>
+                                <p>Working with MongoDB, MySQL, and PostgreSQL for efficient data management and schema design.</p>
                             </div>
                             <div class="detail-card">
                                 <div class="left-accent"></div>
-                                <h4><i class="fa-solid fa-wrench"></i>&nbsp;DevOps</h4>
-                                <p>Ensuring smooth deployment pipelines with Docker, Git, and Linux environments.</p>
+                                <h4><i class="fa-solid fa-layer-group"></i>&nbsp;Full Stack</h4>
+                                <p>Shipping end-to-end web applications with clean UI, robust APIs, and deployment on Vercel/Netlify.</p>
                             </div>
                         </div>
                     </div>
@@ -1736,62 +1763,57 @@ DEPLOYMENT CHECKLIST:
                 <h2 id="skills-title" class="section-title reveal">My Arsenal</h2>
                 <p class="section-sub reveal">Tools and technologies I use to bring ideas to life.</p>
 
-                <div class="filters" id="skillFilters">
-                    <button class="filter-btn active" data-filter="all">All</button>
-                    <button class="filter-btn" data-filter="frontend">Frontend</button>
-                    <button class="filter-btn" data-filter="backend">Backend</button>
-                    <button class="filter-btn" data-filter="iot">IoT/Hardware</button>
-                    <button class="filter-btn" data-filter="ai">AI/ML</button>
-                </div>
+                <div class="skills-showcase reveal" id="skillsGrid">
+                    <div class="skills-radar-card">
+                        <div class="skills-radar-copy">
+                            <div class="section-pill">Interactive Radar</div>
+                            <h3>Capabilities at a glance</h3>
+                            <p>Hover or scroll into view to animate the radar chart. This replaces the old progress bars
+                                with a sharper visual summary of my stack.</p>
+                        </div>
+                        <div class="skills-radar-stage">
+                            <svg id="skillsRadar" viewBox="0 0 520 520" role="img"
+                                aria-label="Skills radar chart"></svg>
+                        </div>
+                    </div>
 
-                <div class="skills-grid" id="skillsGrid">
-                    <div class="skill-card" data-cat="ai backend">
-                        <div class="skill-cat">AI / Backend</div>
-                        <div class="skill-name">Python</div>
-                        <div class="skill-bar">
-                            <div class="fill" style="width:90%"></div>
+                    <div class="skills-surface">
+                        <div class="skills-matrix">
+                            <div class="skill-matrix-card">
+                                <h4>Frontend</h4>
+                                <p>HTML, CSS, JavaScript, TypeScript, React.js, Next.js, Tailwind CSS.</p>
+                            </div>
+                            <div class="skill-matrix-card">
+                                <h4>Backend</h4>
+                                <p>Node.js, Express.js, REST API development and integration.</p>
+                            </div>
+                            <div class="skill-matrix-card">
+                                <h4>Databases</h4>
+                                <p>MongoDB, MySQL, PostgreSQL — schema design and query optimization.</p>
+                            </div>
+                            <div class="skill-matrix-card">
+                                <h4>Tools</h4>
+                                <p>Git, GitHub, VS Code, npm, Vercel, Netlify deployment workflows.</p>
+                            </div>
+                            <div class="skill-matrix-card">
+                                <h4>Full Stack</h4>
+                                <p>React, Node.js, Express, MongoDB, and hosted deployment workflows.</p>
+                            </div>
                         </div>
-                        <div class="skill-pct">90% Proficiency</div>
-                    </div>
-                    <div class="skill-card" data-cat="frontend">
-                        <div class="skill-cat">Frontend</div>
-                        <div class="skill-name">React.js</div>
-                        <div class="skill-bar">
-                            <div class="fill" style="width:85%"></div>
+                        <div class="skill-chip-row">
+                            <span>HTML</span>
+                            <span>CSS</span>
+                            <span>JavaScript</span>
+                            <span>TypeScript</span>
+                            <span>React.js</span>
+                            <span>Next.js</span>
+                            <span>Tailwind CSS</span>
+                            <span>Node.js</span>
+                            <span>Express</span>
+                            <span>MongoDB</span>
+                            <span>MySQL</span>
+                            <span>PostgreSQL</span>
                         </div>
-                        <div class="skill-pct">85% Proficiency</div>
-                    </div>
-                    <div class="skill-card" data-cat="iot backend">
-                        <div class="skill-cat">IoT / Systems</div>
-                        <div class="skill-name">C / C++</div>
-                        <div class="skill-bar">
-                            <div class="fill" style="width:80%"></div>
-                        </div>
-                        <div class="skill-pct">80% Proficiency</div>
-                    </div>
-                    <div class="skill-card" data-cat="ai">
-                        <div class="skill-cat">Machine Learning</div>
-                        <div class="skill-name">TensorFlow</div>
-                        <div class="skill-bar">
-                            <div class="fill" style="width:75%"></div>
-                        </div>
-                        <div class="skill-pct">75% Proficiency</div>
-                    </div>
-                    <div class="skill-card" data-cat="iot">
-                        <div class="skill-cat">Hardware</div>
-                        <div class="skill-name">ESP32 / Arduino</div>
-                        <div class="skill-bar">
-                            <div class="fill" style="width:85%"></div>
-                        </div>
-                        <div class="skill-pct">85% Proficiency</div>
-                    </div>
-                    <div class="skill-card" data-cat="backend">
-                        <div class="skill-cat">Database</div>
-                        <div class="skill-name">MongoDB / SQL</div>
-                        <div class="skill-bar">
-                            <div class="fill" style="width:70%"></div>
-                        </div>
-                        <div class="skill-pct">70% Proficiency</div>
                     </div>
                 </div>
             </div>
@@ -1806,81 +1828,19 @@ DEPLOYMENT CHECKLIST:
                 <div class="projects-filter" id="projFilters">
                     <button class="filter-btn active" data-filter="all">All</button>
                     <button class="filter-btn" data-filter="web">Web App</button>
-                    <button class="filter-btn" data-filter="iot">IoT</button>
-                    <button class="filter-btn" data-filter="ai">AI / ML</button>
                 </div>
 
                 <div class="projects-grid" id="projectsGrid">
                     <div class="proj-card" data-cat="web">
                         <div class="top-accent"></div>
-                        <div class="proj-meta">2023 • Web Application</div>
-                        <h3 class="proj-title">Advanced Weather App</h3>
-                        <p class="proj-desc">A responsive weather application providing real-time forecasts, humidity
-                            levels, and wind speed using open APIs. Features dynamic background changes based on weather
-                            conditions.</p>
+                        <div class="proj-meta">Full Stack • Web App</div>
+                        <h3 class="proj-title">Vibe Connect</h3>
+                        <p class="proj-desc">Loading projects from GitHub...</p>
                         <div class="proj-tags">
-                            <span class="proj-tag">React.js</span>
-                            <span class="proj-tag">OpenWeatherAPI</span>
-                            <span class="proj-tag">CSS3</span>
+                            <span class="proj-tag">Full Stack</span>
                         </div>
                         <div class="proj-links">
-                            <a href="https://github.com/jagga-123/Weather-Forecast-Application" target="_blank"
-                                rel="noopener noreferrer"><i class="fa-brands fa-github"></i> Source</a>
-                        </div>
-                    </div>
-
-                    <div class="proj-card" data-cat="ai web">
-                        <div class="top-accent"></div>
-                        <div class="proj-meta">2023 • AI / Machine Learning</div>
-                        <h3 class="proj-title">AI Emotion Detector</h3>
-                        <p class="proj-desc">A web-based interface that uses computer vision to detect and classify
-                            human emotions in real-time through the webcam. Utilizes a trained CNN model backend.</p>
-                        <div class="proj-tags">
-                            <span class="proj-tag">Python</span>
-                            <span class="proj-tag">OpenCV</span>
-                            <span class="proj-tag">TensorFlow</span>
-                            <span class="proj-tag">Flask</span>
-                        </div>
-                        <div class="proj-links">
-                            <a href="https://github.com/jagga-123/ai-emotion-detector" target="_blank"
-                                rel="noopener noreferrer"><i class="fa-brands fa-github"></i> Source</a>
-                        </div>
-                    </div>
-
-                    <div class="proj-card" data-cat="ai">
-                        <div class="top-accent"></div>
-                        <div class="proj-meta">2024 • FinTech Bot</div>
-                        <h3 class="proj-title">Binance Futures Bot</h3>
-                        <p class="proj-desc">Automated trading bot for cryptocurrency markets. Implements technical
-                            analysis strategies (RSI, MACD) to execute trades on Binance Futures API with risk
-                            management.</p>
-                        <div class="proj-tags">
-                            <span class="proj-tag">Python</span>
-                            <span class="proj-tag">Binance API</span>
-                            <span class="proj-tag">Pandas</span>
-                            <span class="proj-tag">AWS EC2</span>
-                        </div>
-                        <div class="proj-links">
-                            <a href="https://github.com/jagga-123/binance-futures-testnet-bot-python"
-                                target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i>
-                                Source</a>
-                        </div>
-                    </div>
-
-                    <div class="proj-card" data-cat="iot">
-                        <div class="top-accent"></div>
-                        <div class="proj-meta">2024 • IoT Prototype</div>
-                        <h3 class="proj-title">Smart Home Controller</h3>
-                        <p class="proj-desc">IoT system to control home appliances remotely via a mobile dashboard.
-                            Features voice command integration and power consumption monitoring.</p>
-                        <div class="proj-tags">
-                            <span class="proj-tag">ESP32</span>
-                            <span class="proj-tag">MQTT</span>
-                            <span class="proj-tag">Node-RED</span>
-                        </div>
-                        <div class="proj-links">
-                            <a href="https://github.com/jagga-123/iot-sensor-hub" target="_blank"
-                                rel="noopener noreferrer"><i class="fa-brands fa-github"></i> Source</a>
+                            <a href="https://github.com/jagga-123/vibe-connect" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i> Source</a>
                         </div>
                     </div>
                 </div>
@@ -2012,46 +1972,48 @@ DEPLOYMENT CHECKLIST:
                 <div style="margin-top:2rem">
                     <div class="gh-stats-wrap">
                         <div class="gh-box">
-                            <div class="num" data-target="15">0</div>
+                            <div class="num count-up" id="githubReposCount" data-count-target="0">0</div>
                             <div class="label">Repositories</div>
                         </div>
                         <div class="gh-box">
-                            <div class="num" data-target="120">0+</div>
-                            <div class="label">Commits (2024)</div>
+                            <div class="num count-up" id="githubFollowersCount" data-count-target="0">0</div>
+                            <div class="label">Followers</div>
                         </div>
                         <div class="gh-box">
-                            <div class="num" data-target="8">0</div>
-                            <div class="label">Pull Requests</div>
+                            <div class="num count-up" id="githubGistsCount" data-count-target="0">0</div>
+                            <div class="label">Public Gists</div>
                         </div>
                         <div class="gh-box">
-                            <div class="num" data-target="100">0%</div>
-                            <div class="label">Passion</div>
+                            <div class="num count-up" id="githubCommitsCount" data-count-target="0">0</div>
+                            <div class="label">Commits</div>
                         </div>
                     </div>
 
-                    <div class="lang-grid">
-                        <div class="lang-row">
-                            <div class="row"><span>JavaScript / React</span><span>45%</span></div>
-                            <div class="lang-bar">
-                                <div class="fill js" style="width:45%"></div>
+                    <div class="github-insights">
+                        <div class="lang-grid" id="githubLanguageGrid">
+                            <div class="lang-row">
+                                <div class="row"><span>JavaScript</span><span>40%</span></div>
+                                <div class="lang-bar">
+                                    <div class="fill js" style="width:40%"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="lang-row">
-                            <div class="row"><span>Python</span><span>35%</span></div>
-                            <div class="lang-bar">
-                                <div class="fill py" style="width:35%"></div>
+                            <div class="lang-row">
+                                <div class="row"><span>TypeScript</span><span>30%</span></div>
+                                <div class="lang-bar">
+                                    <div class="fill py" style="width:30%"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="lang-row">
-                            <div class="row"><span>HTML/CSS</span><span>15%</span></div>
-                            <div class="lang-bar">
-                                <div class="fill html" style="width:15%"></div>
+                            <div class="lang-row">
+                                <div class="row"><span>React / HTML / CSS</span><span>20%</span></div>
+                                <div class="lang-bar">
+                                    <div class="fill html" style="width:20%"></div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="lang-row">
-                            <div class="row"><span>C/C++</span><span>5%</span></div>
-                            <div class="lang-bar">
-                                <div class="fill c" style="width:5%"></div>
+                            <div class="lang-row">
+                                <div class="row"><span>Other</span><span>10%</span></div>
+                                <div class="lang-bar">
+                                    <div class="fill c" style="width:10%"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2145,213 +2107,20 @@ DEPLOYMENT CHECKLIST:
         <i class="fa-solid fa-arrow-up"></i>
     </a>
 
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // 1. Theme Toggle
-            const themeBtn = document.getElementById('themeToggle');
-            const icon = themeBtn.querySelector('i');
-            const savedTheme = localStorage.getItem('theme') || 'dark';
+    <div id="projectModal" class="project-modal" aria-hidden="true">
+        <div class="project-modal-backdrop" data-modal-close></div>
+        <div class="project-modal-panel" role="dialog" aria-modal="true" aria-labelledby="projectModalTitle">
+            <button class="project-modal-close" type="button" data-modal-close aria-label="Close project modal">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="project-modal-content" id="projectModalContent"></div>
+        </div>
+    </div>
 
-            const applyTheme = (theme) => {
-                document.documentElement.setAttribute('data-theme', theme);
-                icon.className = theme === 'light' ? 'fa-regular fa-sun' : 'fa-regular fa-moon';
-                localStorage.setItem('theme', theme);
-            };
+    <div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
+    <div class="cursor-trail" id="cursorTrail" aria-hidden="true"></div>
 
-            applyTheme(savedTheme);
-            themeBtn.addEventListener('click', () => {
-                const current = document.documentElement.getAttribute('data-theme');
-                applyTheme(current === 'dark' ? 'light' : 'dark');
-            });
-
-            // 2. Mobile Menu
-            const hamburger = document.getElementById('hamburger');
-            const mobileMenu = document.getElementById('mobileMenu');
-            let isMenuOpen = false;
-
-            hamburger.addEventListener('click', () => {
-                isMenuOpen = !isMenuOpen;
-                mobileMenu.style.display = isMenuOpen ? 'flex' : 'none';
-                hamburger.setAttribute('aria-expanded', isMenuOpen);
-                // Animate lines to X (simplified)
-                hamburger.querySelector('.lines').style.background = isMenuOpen ? 'transparent' : 'var(--text2)';
-            });
-
-            // Close menu on link click
-            mobileMenu.querySelectorAll('a').forEach(link => {
-                link.addEventListener('click', () => {
-                    isMenuOpen = false;
-                    mobileMenu.style.display = 'none';
-                });
-            });
-
-            // 3. Scroll Reveal Animation
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                        // Stop observing once revealed if desired
-                        // observer.unobserve(entry.target); 
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => observer.observe(el));
-
-            // 4. Typewriter Effect
-            const roles = ["IoT Developer", "Full Stack Engineer", "AI/ML Enthusiast"];
-            let roleIndex = 0;
-            let charIndex = 0;
-            let isDeleting = false;
-            const roleEl = document.getElementById('roleText');
-            const typeSpeed = 100;
-            const backSpeed = 50;
-            const waitTime = 2000;
-
-            function typeWriter() {
-                const currentRole = roles[roleIndex];
-
-                if (isDeleting) {
-                    roleEl.textContent = currentRole.substring(0, charIndex - 1);
-                    charIndex--;
-                } else {
-                    roleEl.textContent = currentRole.substring(0, charIndex + 1);
-                    charIndex++;
-                }
-
-                let nextSpeed = isDeleting ? backSpeed : typeSpeed;
-
-                if (!isDeleting && charIndex === currentRole.length) {
-                    isDeleting = true;
-                    nextSpeed = waitTime;
-                } else if (isDeleting && charIndex === 0) {
-                    isDeleting = false;
-                    roleIndex = (roleIndex + 1) % roles.length;
-                }
-
-                setTimeout(typeWriter, nextSpeed);
-            }
-            typeWriter();
-
-            // 5. Number Counter Animation (Hero & Github Stats)
-            const countUp = (el) => {
-                const target = +el.getAttribute('data-target');
-                const duration = 2000;
-                const increment = target / (duration / 16);
-
-                let current = 0;
-                const timer = setInterval(() => {
-                    current += increment;
-
-                    if (current >= target) {
-                        let labelEl = el.parentElement.querySelector('.label');
-                        let suffix = "";
-
-                        if (labelEl && labelEl.textContent.includes('Passion')) {
-                            suffix = "%";
-                        } else if (target >= 10) {
-                            suffix = "+";
-                        }
-
-                        el.textContent = target + suffix;
-                        clearInterval(timer);
-                    } else {
-                        el.textContent = Math.ceil(current);
-                    }
-                }, 16);
-            };
-
-            const statsObserver = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        const nums = entry.target.querySelectorAll('.num');
-                        nums.forEach(num => countUp(num));
-                        statsObserver.unobserve(entry.target);
-                    }
-                });
-            });
-
-            const heroStats = document.getElementById('hero-stats');
-            if (heroStats) statsObserver.observe(heroStats);
-
-            const ghStats = document.querySelector('.gh-stats-wrap');
-            if (ghStats) statsObserver.observe(ghStats.parentElement);
-
-
-            // 6. Filtering (Skills & Projects)
-            const setupFilter = (btnContainerId, gridId, itemSelector) => {
-                const container = document.getElementById(btnContainerId);
-                const grid = document.getElementById(gridId);
-                if (!container || !grid) return;
-
-                const btns = container.querySelectorAll('.filter-btn');
-                const items = grid.querySelectorAll(itemSelector);
-
-                btns.forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        // active class
-                        btns.forEach(b => b.classList.remove('active'));
-                        btn.classList.add('active');
-
-                        const filter = btn.getAttribute('data-filter');
-
-                        items.forEach(item => {
-                            const cats = item.getAttribute('data-cat');
-                            if (filter === 'all' || cats.includes(filter)) {
-                                item.classList.remove('hidden');
-                                item.style.display = 'block'; // Ensure display is reset
-                                setTimeout(() => item.style.opacity = '1', 10);
-                            } else {
-                                item.classList.add('hidden');
-                                setTimeout(() => item.style.display = 'none', 300); // Wait for transition
-                            }
-                        });
-                    });
-                });
-            };
-
-            setupFilter('skillFilters', 'skillsGrid', '.skill-card');
-            setupFilter('projFilters', 'projectsGrid', '.proj-card');
-
-            // 7. Active Nav Link on Scroll
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.links a');
-
-            window.addEventListener('scroll', () => {
-                let current = '';
-                const scrollY = window.scrollY;
-
-                // Back to top visibility
-                const btt = document.getElementById('backToTop');
-                if (scrollY > 500) btt.style.display = 'flex';
-                else btt.style.display = 'none';
-
-                sections.forEach(section => {
-                    const sectionTop = section.offsetTop;
-                    const sectionHeight = section.clientHeight;
-                    if (scrollY >= (sectionTop - sectionHeight / 3)) {
-                        current = section.getAttribute('id');
-                    }
-                });
-
-                navLinks.forEach(a => {
-                    a.classList.remove('nav-active');
-                    if (a.getAttribute('href').includes(current)) {
-                        a.classList.add('nav-active');
-                    }
-                });
-            });
-
-            // Form Handler (Mock)
-            const form = document.getElementById('contactForm');
-            if (form) {
-                form.addEventListener('submit', (e) => {
-                    // Standard form submission to Formspree
-                    // To use AJAX preventDefault here
-                });
-            }
-        });
-    </script>
+    <script defer src="scripts.js"></script>
 </body>
 
 </html>
