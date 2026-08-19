@@ -27,7 +27,7 @@ python -m http.server 8080
 - **A project changes**: edit `projects.json` (reference), the project card in `index.html`, and its `projects/<slug>.html` case study — all three, by hand.
 - **A certification is added**: edit `certifications.json` (reference) and the matching card in `index.html`.
 - **Resume**: replace `assets/Sandeep_Kumar_Resume.pdf`. Every "Resume" control on the site (nav, hero, mobile menu, the `R` keyboard shortcut) links straight to that file — there is no external Drive/cloud link anywhere, on purpose.
-- **Domain**: search the repo for `YOUR-DOMAIN-HERE` (canonical tags, Open Graph tags, `sitemap.xml`, `robots.txt`) and replace with the real deployed domain once known.
+- **Domain**: live at `https://portfolio-website-eight-beryl-67.vercel.app/` (canonical tags, Open Graph tags, `sitemap.xml`, `robots.txt` all point here). If a custom domain is attached later, search the repo for `portfolio-website-eight-beryl-67.vercel.app` and replace it everywhere.
 
 ## Deployment
 
@@ -35,5 +35,5 @@ See `DEPLOY.md`.
 
 ## Notes
 
-- `og:image` is currently `assets/og-image.svg`. X/Twitter's card renderer requires PNG/JPG/WEBP/GIF, not SVG — export it to a 1200×630 PNG when image tooling is available for full cross-platform link-preview support. Every other major platform (LinkedIn, Facebook, Slack, iMessage) reads the SVG.
+- `og:image`/`twitter:image` use `assets/og-image.png` (1200×630, rendered from `assets/og-image.svg` — regenerate by opening the SVG in a browser at that viewport and re-exporting if the source ever changes).
 - Live GitHub stats (`#githubStats`) call the public GitHub API client-side. The numbers already in the HTML are today's real values, used as the fallback if the API call fails or is rate-limited — the block never shows a broken/empty state.

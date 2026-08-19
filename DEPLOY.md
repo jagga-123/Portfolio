@@ -15,11 +15,16 @@ Static site — no build command, no output directory beyond the repo root.
 ## GitHub Pages
 - Serve from `main` (or a `docs/` folder if preferred).
 
-## After the first deploy
+## Live deployment
 
-1. Note the real deployed URL.
-2. Find-and-replace `YOUR-DOMAIN-HERE` across the repo (`index.html`, `projects/*.html`, `sitemap.xml`, `robots.txt`) with that real domain.
-3. Redeploy.
+Deployed on Vercel: https://portfolio-website-eight-beryl-67.vercel.app/
+(project dashboard: https://vercel.com/jagga-123s-projects/sandeepstack)
+
+Canonical/OG/Twitter tags, JSON-LD, `sitemap.xml`, and `robots.txt` are all
+set to this URL. If a custom domain is ever attached in Vercel, find-and-
+replace `portfolio-website-eight-beryl-67.vercel.app` across those same
+files (`index.html`, `projects/*.html`, `sitemap.xml`, `robots.txt`) with
+the new domain and redeploy.
 
 ## Contact form
 
