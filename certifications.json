@@ -1,25 +1,22 @@
 {
   "certifications": [
     {
-      "title": "NPTEL - The joy of Computing using python",
-      "issuer": "NPTEL",
+      "title": "The Joy of Computing using Python",
+      "issuer": "NPTEL — IIT Madras",
       "date": "Apr 2025",
-      "score": "61/100",
-      "link": "#"
+      "link": null
     },
     {
-      "title": "NPTEL - Introduction to operating system",
-      "issuer": "NPTEL",
+      "title": "Introduction to Operating Systems",
+      "issuer": "NPTEL — IIT Madras",
       "date": "Sep 2025",
-      "score": "52/100",
-      "link": "#"
+      "link": null
     },
     {
-      "title": "Python Bootcamp in College",
-      "issuer": "Local",
+      "title": "Web Development Internship",
+      "issuer": "Skill Internship",
       "date": "2024",
-      "score": "-",
-      "link": "#"
+      "link": null
     }
   ]
 }

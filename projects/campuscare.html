@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CampusCare — Case Study | Sandeep Kumar</title>
+  <meta name="description" content="How CampusCare enforces role-based access control at the API layer, not just in the UI — architecture, challenges, and what I'd do differently.">
+  <link rel="canonical" href="https://YOUR-DOMAIN-HERE.vercel.app/projects/campuscare.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>(function(){var t=localStorage.getItem('theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();</script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="logo">Sandeep Kumar</a>
+      <div class="case-top-links">
+        <a href="../index.html#projects">All projects</a>
+        <a href="../assets/Sandeep_Kumar_Resume.pdf" download class="btn btn-primary btn-sm">Resume</a>
+      </div>
+      <div class="nav-controls">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="true">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="case-hero">
+      <div class="container">
+        <a href="../index.html#projects" class="case-back">← Back to all projects</a>
+        <h1>CampusCare</h1>
+        <p class="tagline">A campus platform where student and admin are two genuinely different trust levels, not two different themes — access is enforced at the API layer, where it actually matters.</p>
+        <div class="case-meta">
+          <a href="https://campuscare-frontend.onrender.com" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Live demo</a>
+          <a href="https://github.com/jagga-123/campuse--care" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">View on GitHub</a>
+        </div>
+        <div class="project-tags">
+          <span class="project-tag">React</span>
+          <span class="project-tag">Node.js</span>
+          <span class="project-tag">Express</span>
+          <span class="project-tag">MongoDB</span>
+          <span class="project-tag">JWT</span>
+          <span class="project-tag">RBAC</span>
+        </div>
+        <div class="case-thumb">
+          <div class="cover-grid" aria-hidden="true"></div>
+          <div class="cover-content">
+            <div class="cover-badge" aria-hidden="true">CC</div>
+            <div class="cover-title">CampusCare</div>
+            <div class="cover-stack" aria-hidden="true"><span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>RBAC</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="case-body" data-stagger>
+
+        <div class="case-section reveal">
+          <h2>Problem</h2>
+          <p>A shared frontend has two categories of user — students and admins — who need to see and do genuinely different things. The easy version of this is a UI that hides an "Admin" button from students. The real version is a system where a student's request for admin-only data is rejected by the server itself, regardless of what the client sends or how the request is crafted — because a UI toggle is not a security boundary.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Constraints</h2>
+          <ul>
+            <li>Every protected route needed a role check before its handler ran — not a check the handler remembered to do, one it couldn't skip.</li>
+            <li>Admins needed read access to all student records; students needed access to only their own — the same data model had to support both without widening a student's query surface.</li>
+            <li>One frontend, two functionally distinct dashboards — without duplicating the app per role.</li>
+          </ul>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Architecture</h2>
+          <p>React frontend with role-aware routing · Node/Express REST API with role-checking middleware in front of every protected route · MongoDB for student and admin records · JWT carrying the authenticated role as a claim.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Key Engineering Decision</h2>
+          <p>Role-checking middleware sits in front of every protected route, reading the role claim out of the verified JWT before the controller ever runs — so an admin-only endpoint rejects a student's token at the boundary, not somewhere inside application logic where a mistake could let it through. The React frontend reads the same claim to decide which dashboard shell to render, but that's UX convenience layered on top of a boundary that already holds without it.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Trade-offs</h2>
+          <p>Authorization here is route-level, not resource-level — an admin route is either open to all admins or closed to all students, with no per-record scoping (e.g. a department-scoped admin who should only see their own department's students). That's the right amount of complexity for two roles; it would need a real permissions model before adding a third.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Lessons Learned</h2>
+          <p>The natural order is to build the UI first and bolt permissions on after. Building the RBAC middleware first here reversed that — every route had to declare its required role before it existed, so there was never a retrofitting pass where a protected route accidentally shipped open. That ordering is the actual takeaway, more than the middleware code itself.</p>
+        </div>
+
+        <div class="case-nav">
+          <a href="vibeconnect.html" class="btn btn-ghost btn-sm">← VibeConnect</a>
+          <a href="helperhub.html" class="btn btn-secondary btn-sm">Next: HelperHub →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="container">© <span id="footerYear">2026</span> Sandeep Kumar · <a href="https://github.com/jagga-123" target="_blank" rel="noopener">GitHub</a></div>
+  </footer>
+
+  <script src="../scripts.js" defer></script>
+</body>
+</html>

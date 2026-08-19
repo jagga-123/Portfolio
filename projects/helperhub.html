@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HelperHub — Case Study | Sandeep Kumar</title>
+  <meta name="description" content="How HelperHub models a request-lifecycle state machine on the same MERN foundation as my other apps — architecture, challenges, and what I'd do differently.">
+  <link rel="canonical" href="https://YOUR-DOMAIN-HERE.vercel.app/projects/helperhub.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>(function(){var t=localStorage.getItem('theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();</script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="logo">Sandeep Kumar</a>
+      <div class="case-top-links">
+        <a href="../index.html#projects">All projects</a>
+        <a href="../assets/Sandeep_Kumar_Resume.pdf" download class="btn btn-primary btn-sm">Resume</a>
+      </div>
+      <div class="nav-controls">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="true">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="case-hero">
+      <div class="container">
+        <a href="../index.html#projects" class="case-back">← Back to all projects</a>
+        <h1>HelperHub</h1>
+        <p class="tagline">A community help-matching platform where requests move through a real lifecycle — open, claimed, resolved — validated server-side, not just tracked as a status label in the UI.</p>
+        <div class="case-meta">
+          <a href="https://eclectic-marzipan-57a909.netlify.app/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Live demo</a>
+          <a href="https://github.com/jagga-123/Helperhub" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">View on GitHub</a>
+        </div>
+        <div class="project-tags">
+          <span class="project-tag">React</span>
+          <span class="project-tag">Node.js</span>
+          <span class="project-tag">Express</span>
+          <span class="project-tag">MongoDB</span>
+          <span class="project-tag">JWT</span>
+        </div>
+        <div class="case-thumb">
+          <picture>
+            <source srcset="../assets/projects/helperhub.webp" type="image/webp">
+            <img src="../assets/projects/helperhub.png" alt="HelperHub — hourly domestic-help booking marketplace, live product screenshot" loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="case-body" data-stagger>
+
+        <div class="case-section reveal">
+          <h2>Problem</h2>
+          <p>A help request isn't a static record — it moves through a lifecycle: posted, claimed by a helper, resolved. If status is just a field the client can set, two helpers can claim the same request at once, or a request can jump straight from "open" to "resolved" with no one having claimed it. The status has to be a real state machine enforced by the server, not a label the UI happens to display.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Constraints</h2>
+          <ul>
+            <li>A request can only move through valid transitions (open → claimed → resolved) — no state can be skipped or reversed by a client-crafted request.</li>
+            <li>Only the request's owner or its assigned helper should be able to act on it, not any authenticated user.</li>
+            <li>Built on the same MERN foundation as VibeConnect and CampusCare, to see which parts of it — auth, validation, deployment — were genuinely reusable versus specific to each domain.</li>
+          </ul>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Architecture</h2>
+          <p>React frontend · Node/Express REST API · MongoDB · JWT auth · request status-transition validation living in the API layer rather than the client.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Key Engineering Decision</h2>
+          <p>Each request carries an explicit status enum with transition rules enforced in the API layer — a request can move from open to claimed to resolved, and nothing else, regardless of what a client sends. Endpoints are scoped to whether the caller is the request's owner or its assigned helper, so a helper can't resolve someone else's request even with a valid token.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Trade-offs</h2>
+          <p>The state machine is linear with three states — it has no path for a claimed request that's abandoned or disputed, which a real production version would need (a fourth "expired" or "cancelled" state, plus a scheduled job to enforce timeouts). Scoped correctly for the problem it demonstrates; not a complete lifecycle for a real marketplace.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Lessons Learned</h2>
+          <p>The status state machine was the one genuinely new piece of engineering here — everything else (auth, validation, deployment config) reused the previous two projects' foundation almost directly, which made the difference in build time obvious. The other takeaway: building the same stack a third time is what actually reveals which architectural decisions were load-bearing and which were just habit.</p>
+        </div>
+
+        <div class="case-nav">
+          <a href="campuscare.html" class="btn btn-ghost btn-sm">← CampusCare</a>
+          <a href="ai-b2b-textile.html" class="btn btn-secondary btn-sm">Next: AI B2B Textile →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="container">© <span id="footerYear">2026</span> Sandeep Kumar · <a href="https://github.com/jagga-123" target="_blank" rel="noopener">GitHub</a></div>
+  </footer>
+
+  <script src="../scripts.js" defer></script>
+</body>
+</html>

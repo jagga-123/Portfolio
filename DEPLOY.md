@@ -1,19 +1,26 @@
 # Deployment Guide
 
+Static site — no build command, no output directory beyond the repo root.
+
 ## Vercel (recommended)
-1. Create a Vercel account and connect your GitHub repository.
-2. Push this project to GitHub.
-3. In Vercel, import the repo and set the framework to "Other" or "Static Site".
-4. Set the build command to blank and the output directory to `/` (static). Deploy.
+1. Import the GitHub repo into Vercel.
+2. Framework preset: "Other" / static. Build command: blank. Output directory: `/`.
+3. Deploy.
 
 ## Netlify
-1. Connect your GitHub repo to Netlify.
-2. For a static site without a build step, set the build command empty and publish directory `/`.
-3. Deploy and configure domain.
+1. Connect the GitHub repo.
+2. Build command: blank. Publish directory: `/`.
+3. Deploy.
 
 ## GitHub Pages
-- Push to `gh-pages` branch or configure to serve from `main`/`docs` folder.
+- Serve from `main` (or a `docs/` folder if preferred).
 
-## Environment variables
-- If using EmailJS or other services, set keys in your hosting provider's environment variables and update `scripts.js` integration.
+## After the first deploy
 
+1. Note the real deployed URL.
+2. Find-and-replace `YOUR-DOMAIN-HERE` across the repo (`index.html`, `projects/*.html`, `sitemap.xml`, `robots.txt`) with that real domain.
+3. Redeploy.
+
+## Contact form
+
+The contact form validates client-side and hands off to a `mailto:` link — no backend, no API keys, nothing to configure. If a real inbound form (e.g. Formspree) is wanted later, that only requires changing the `fetch`/`mailto` call in `scripts.js`'s `setupContactForm()` — no HTML changes needed.

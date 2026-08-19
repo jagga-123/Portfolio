@@ -1,3 +1,5 @@
 User-agent: *
 Allow: /
-Sitemap: /sitemap.xml
+
+# TODO: replace YOUR-DOMAIN-HERE with the real deployed domain
+Sitemap: https://YOUR-DOMAIN-HERE.vercel.app/sitemap.xml

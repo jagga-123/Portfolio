@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0b0d12"/>
+      <stop offset="100%" stop-color="#171b24"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="0" y="0" width="1200" height="630" fill="none" stroke="#242832" stroke-width="2"/>
+  <text x="90" y="230" font-family="Arial, sans-serif" font-size="30" letter-spacing="4" fill="#d7a75f">SANDEEP KUMAR</text>
+  <text x="90" y="320" font-family="Arial, sans-serif" font-size="66" font-weight="700" fill="#eef0f4">Full Stack Developer</text>
+  <text x="90" y="380" font-family="Arial, sans-serif" font-size="30" fill="#9ba3b0">React · Next.js · Node.js · NestJS</text>
+  <text x="90" y="470" font-family="Arial, sans-serif" font-size="24" fill="#9ba3b0">4 apps shipped to production · 1 live freelance SaaS build</text>
+  <circle cx="1080" cy="90" r="7" fill="#4caf7d"/>
+  <text x="1055" y="97" font-family="Arial, sans-serif" font-size="20" fill="#4caf7d" text-anchor="end">OPEN TO WORK</text>
+</svg>

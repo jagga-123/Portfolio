@@ -1,7 +1,54 @@
 [
-  {"name":"Vibe Connect","desc":"A full-stack social connection platform where users can create profiles, connect with others, and experience a modern responsive community-based web application.","url":"https://github.com/jagga-123/vibe-connect","homepage":"https://vibe-connect-chi.vercel.app/","topics":["web","fullstack","react","node","mongodb"]},
-  {"name":"Campus Care","desc":"A MERN stack campus management platform designed to simplify student services, communication, and campus-related workflows with a clean responsive interface.","url":"https://github.com/jagga-123/campuse--care","homepage":"https://campuscare-frontend.onrender.com","topics":["web","fullstack","mern","react","mongodb"]},
-  {"name":"Karo Pitch","desc":"An investor-focused startup landing page with Bharat-inspired UI, scroll animations, and a conversion-optimized layout designed for founders seeking investments.","url":"https://github.com/jagga-123/-bharat-founder-pitch-","homepage":"https://bharat-founder-pitch.vercel.app","topics":["web","frontend","html","css","javascript"]},
-  {"name":"HelperHub","desc":"A full-stack service platform that connects users with helpers and provides an easy interface for managing service requests efficiently.","url":"https://github.com/jagga-123/Helperhub","homepage":"https://eclectic-marzipan-57a909.netlify.app/","topics":["web","fullstack","react","node","rest-api"]},
-  {"name":"AI Resume Builder","desc":"An AI-powered resume builder web application that helps users create ATS-friendly resumes with smart optimization suggestions, live preview, and PDF export functionality.","url":"https://github.com/jagga-123/Resume-Builder","homepage":"https://resume-builder-eta-blush.vercel.app/","topics":["web","fullstack","nextjs","react","tailwind"]}
+  {
+    "slug": "vibeconnect",
+    "name": "VibeConnect",
+    "tagline": "Real-time updates synchronized across Socket.io and REST, so two clients never disagree on state",
+    "desc": "A full-stack social platform where users build profiles, post updates, and interact in real time. Likes and comments sync instantly across connected clients via Socket.io, with JWT-secured REST APIs behind it.",
+    "problem": "Most fresher social-app clones stop at CRUD. The goal here was to actually solve the harder part: state that updates live, for every connected user, without a page refresh.",
+    "url": "https://github.com/jagga-123/vibe-connect",
+    "homepage": "https://vibe-connect-chi.vercel.app/",
+    "topics": ["React", "Node.js", "Express", "MongoDB", "Socket.io", "JWT"],
+    "caseStudy": "projects/vibeconnect.html",
+    "featured": true,
+    "order": 1
+  },
+  {
+    "slug": "campuscare",
+    "name": "CampusCare",
+    "tagline": "RBAC enforced at the API layer, not hidden in the UI",
+    "desc": "A campus operations platform with two separate, permission-scoped dashboards. Students and admins see different data and different actions, enforced by role-based access control on every API route, not just hidden in the UI.",
+    "problem": "Campus services in most colleges still run on paper and WhatsApp groups. This models what a real internal tool for a college looks like — access control, not just a UI, is the actual product.",
+    "url": "https://github.com/jagga-123/campuse--care",
+    "homepage": "https://campuscare-frontend.onrender.com",
+    "topics": ["React", "Node.js", "Express", "MongoDB", "JWT", "RBAC"],
+    "caseStudy": "projects/campuscare.html",
+    "featured": true,
+    "order": 2
+  },
+  {
+    "slug": "helperhub",
+    "name": "HelperHub",
+    "tagline": "Request status is a state machine validated server-side — no client can forge a transition",
+    "desc": "A community help-matching platform: users post requests, helpers respond, and the app tracks each request through its lifecycle — open, claimed, resolved — behind JWT-protected APIs.",
+    "problem": "Practicing request/response matching and lifecycle state (not just another feed) with the same MERN foundation as VibeConnect and CampusCare, to see the pattern reused in a different domain.",
+    "url": "https://github.com/jagga-123/Helperhub",
+    "homepage": "https://eclectic-marzipan-57a909.netlify.app/",
+    "topics": ["React", "Node.js", "Express", "MongoDB", "JWT"],
+    "caseStudy": "projects/helperhub.html",
+    "featured": true,
+    "order": 3
+  },
+  {
+    "slug": "ai-b2b-textile",
+    "name": "AI B2B Textile",
+    "tagline": "Hub and category are independent, combinable filters — not a forced pick-one-first flow",
+    "desc": "A B2B marketplace connecting verified fabric suppliers across six Indian textile hubs — Surat, Tiruppur, Ludhiana, Ahmedabad, Jaipur, and Mumbai — with transparent MOQ and pricing, category browsing, and supplier profiles. Live today with 34 real listings across 6 categories.",
+    "problem": "Textile sourcing in India runs through opaque middlemen and phone calls. This gives buyers transparent pricing and MOQs upfront, and gives suppliers a real storefront by hub and category.",
+    "url": "https://github.com/jagga-123/AI-B2B-TEXTILE",
+    "homepage": "https://ai-b2-b-textile-frontend.vercel.app/",
+    "topics": ["Next.js", "React", "Tailwind CSS", "Vercel"],
+    "caseStudy": "projects/ai-b2b-textile.html",
+    "featured": true,
+    "order": 4
+  }
 ]

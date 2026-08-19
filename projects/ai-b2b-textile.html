@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI B2B Textile — Case Study | Sandeep Kumar</title>
+  <meta name="description" content="How AI B2B Textile structures a B2B marketplace by hub and category across 6 Indian textile hubs — architecture, challenges, and what I'd do differently.">
+  <link rel="canonical" href="https://YOUR-DOMAIN-HERE.vercel.app/projects/ai-b2b-textile.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>(function(){var t=localStorage.getItem('theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();</script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="logo">Sandeep Kumar</a>
+      <div class="case-top-links">
+        <a href="../index.html#projects">All projects</a>
+        <a href="../assets/Sandeep_Kumar_Resume.pdf" download class="btn btn-primary btn-sm">Resume</a>
+      </div>
+      <div class="nav-controls">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="true">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="case-hero">
+      <div class="container">
+        <a href="../index.html#projects" class="case-back">← Back to all projects</a>
+        <h1>AI B2B Textile</h1>
+        <p class="tagline">A B2B fabric sourcing marketplace connecting verified suppliers across 6 Indian textile hubs, with transparent MOQ and pricing shown upfront — live today with 34 real listings across 6 categories.</p>
+        <div class="case-meta">
+          <a href="https://ai-b2-b-textile-frontend.vercel.app/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Live demo</a>
+          <a href="https://github.com/jagga-123/AI-B2B-TEXTILE" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">View on GitHub</a>
+        </div>
+        <div class="project-tags">
+          <span class="project-tag">Next.js</span>
+          <span class="project-tag">React</span>
+          <span class="project-tag">Tailwind CSS</span>
+          <span class="project-tag">Vercel</span>
+        </div>
+        <div class="case-thumb">
+          <picture>
+            <source srcset="../assets/projects/ai-b2b-textile.webp" type="image/webp">
+            <img src="../assets/projects/ai-b2b-textile.png" alt="AI B2B Textile — fabric sourcing marketplace, live product screenshot" loading="lazy" decoding="async">
+          </picture>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="case-body" data-stagger>
+
+        <div class="case-section reveal">
+          <h2>Problem</h2>
+          <p>Textile sourcing in India typically runs through phone-based negotiation with a middleman, with no visible pricing or minimum order quantity until a buyer makes contact. The problem is discovery: how do you let a buyer browse verified suppliers along two independent axes — where they are (hub) and what they make (category) — and see real pricing and MOQ upfront, without forcing a rigid pick-one-first funnel or reducing a B2B sourcing decision to a consumer-e-commerce template with different labels.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Constraints</h2>
+          <ul>
+            <li>Hub (geography) and category (product type) both had to filter the same listing set independently and combinably — neither could be the "primary" axis the other depends on.</li>
+            <li>Every category and hub view needed to be a real, addressable page — not client-side-only state that disappears on refresh or can't be shared as a link.</li>
+            <li>Pricing and MOQ needed to read as genuinely useful B2B data, not consumer-storefront copy with different field names.</li>
+          </ul>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Architecture</h2>
+          <p>Next.js frontend with routed category and hub views · React components for listings and supplier cards · Tailwind CSS for the UI layer · deployed on Vercel.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Key Engineering Decision</h2>
+          <p>Category and hub are modeled as two independent, combinable filters over one listing set — not a hierarchy where you pick a hub before you can see categories, or vice versa. Each supplier profile carries hub, category, MOQ, and price per meter as first-class fields, and category/hub pages use Next.js's file-based routing, so each combination is a real, addressable page rather than client-only state. Live today with 34 fabric listings across 6 categories, spanning suppliers in Surat, Tiruppur, Ludhiana, Ahmedabad, Jaipur, and Mumbai.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Trade-offs</h2>
+          <p>Listings and supplier data are currently seeded, not backed by a real supplier-onboarding flow — the marketplace architecture (routing, filtering, the two-axis data model) is production-shaped, but there's no auth or dashboard yet for a supplier to list themselves. That's the next real engineering problem here, not a small addition.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Lessons Learned</h2>
+          <p>The hardest design problem in a marketplace usually isn't the code — it's the taxonomy. Deciding what a "category" and a "hub" actually mean to a buyer, and making sure every listing fits cleanly into both, had to happen before writing a single component. Getting that wrong would have meant rebuilding the data model, not just the UI.</p>
+        </div>
+
+        <div class="case-nav">
+          <a href="helperhub.html" class="btn btn-ghost btn-sm">← HelperHub</a>
+          <a href="../index.html#projects" class="btn btn-secondary btn-sm">Back to all projects →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="container">© <span id="footerYear">2026</span> Sandeep Kumar · <a href="https://github.com/jagga-123" target="_blank" rel="noopener">GitHub</a></div>
+  </footer>
+
+  <script src="../scripts.js" defer></script>
+</body>
+</html>

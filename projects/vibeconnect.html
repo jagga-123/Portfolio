@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VibeConnect — Case Study | Sandeep Kumar</title>
+  <meta name="description" content="How VibeConnect's real-time social feed stays consistent across Socket.io and REST — architecture, challenges, and what I'd do differently.">
+  <link rel="canonical" href="https://YOUR-DOMAIN-HERE.vercel.app/projects/vibeconnect.html">
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../styles.css">
+  <script>(function(){var t=localStorage.getItem('theme');if(t==='light')document.documentElement.setAttribute('data-theme','light');})();</script>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="nav">
+    <div class="container nav-inner">
+      <a href="../index.html" class="logo">Sandeep Kumar</a>
+      <div class="case-top-links">
+        <a href="../index.html#projects">All projects</a>
+        <a href="../assets/Sandeep_Kumar_Resume.pdf" download class="btn btn-primary btn-sm">Resume</a>
+      </div>
+      <div class="nav-controls">
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme" aria-pressed="true">
+          <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+          <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a7 7 0 0 0 10.5 10.5z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="case-hero">
+      <div class="container">
+        <a href="../index.html#projects" class="case-back">← Back to all projects</a>
+        <h1>VibeConnect</h1>
+        <p class="tagline">A real-time social feed where every like, comment, and post has to reach every connected client through two independent transports — REST and WebSocket — without the two ever disagreeing about the current state.</p>
+        <div class="case-meta">
+          <a href="https://vibe-connect-chi.vercel.app/" target="_blank" rel="noopener" class="btn btn-primary btn-sm">Live demo</a>
+          <a href="https://github.com/jagga-123/vibe-connect" target="_blank" rel="noopener" class="btn btn-secondary btn-sm">View on GitHub</a>
+        </div>
+        <div class="project-tags">
+          <span class="project-tag">React</span>
+          <span class="project-tag">Node.js</span>
+          <span class="project-tag">Express</span>
+          <span class="project-tag">MongoDB</span>
+          <span class="project-tag">Socket.io</span>
+          <span class="project-tag">JWT</span>
+        </div>
+        <div class="case-thumb">
+          <div class="cover-grid" aria-hidden="true"></div>
+          <div class="cover-content">
+            <div class="cover-badge" aria-hidden="true">VC</div>
+            <div class="cover-title">VibeConnect</div>
+            <div class="cover-stack" aria-hidden="true"><span>React</span><span>Node.js</span><span>Express</span><span>MongoDB</span><span>Socket.io</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <div class="case-body" data-stagger>
+
+        <div class="case-section reveal">
+          <h2>Problem</h2>
+          <p>Socket.io and REST are two independent paths to the same data. The moment a like or comment can arrive over either one, two connected clients can end up disagreeing about what's true — one still showing the old count, the other showing the new one. The problem was making the feed feel real-time without ever letting the two transports drift apart, and without letting an unauthenticated client subscribe to a channel it has no business hearing.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Constraints</h2>
+          <ul>
+            <li>Every state-changing action had to be valid whether it arrived over REST or a socket event — no separate code paths with separate rules.</li>
+            <li>A client's identity had to be verified at the socket layer independently; inheriting trust from an HTTP session wasn't acceptable, since the socket handshake is a different connection entirely.</li>
+            <li>Reconnects (dropped tabs, network blips) had to converge on correct state without a bespoke sync protocol — no case for building a CRDT or operational-transform layer at this scale.</li>
+          </ul>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Architecture</h2>
+          <p>React frontend · Node/Express REST API handling standard data and auth endpoints · a Socket.io layer running alongside Express for real-time events · MongoDB for persistence · JWT used for both the HTTP requests and the socket handshake.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Key Engineering Decision</h2>
+          <p>JWT is verified at the Socket.io handshake itself — not inherited from the REST session — so a socket connection carries its own proof of identity before it's allowed to subscribe to any channel. On the data side, every write lands in MongoDB before it broadcasts, so a broadcast is always a notification that something already happened, never the thing that makes it true. If a broadcast is dropped, a page refresh still shows the correct state, because REST and the socket layer read from the same source.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Trade-offs</h2>
+          <p>Socket.io's default in-memory adapter scopes real-time state to a single Node process — this holds cleanly at current scale but doesn't horizontally scale across multiple server instances without adding a shared adapter (e.g. Redis pub/sub) in front of it. Writing to MongoDB before broadcasting also means real-time delivery is bounded by write latency, not instant — a deliberate consistency-over-speed trade-off, not an oversight.</p>
+        </div>
+
+        <div class="case-section reveal">
+          <h2>Lessons Learned</h2>
+          <p>Broadcasting from the socket layer before the database write landed was the fastest way to get two clients disagreeing about state — writing first, then broadcasting, removed that entire class of bug. The other real lesson: authenticating a socket handshake is a genuinely different problem from authenticating an HTTP request, and treating it as "the same JWT check, just somewhere else" is exactly the kind of assumption that creates a security gap.</p>
+        </div>
+
+        <div class="case-nav">
+          <a href="../index.html#projects" class="btn btn-ghost btn-sm">← All projects</a>
+          <a href="campuscare.html" class="btn btn-secondary btn-sm">Next: CampusCare →</a>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site">
+    <div class="container">© <span id="footerYear">2026</span> Sandeep Kumar · <a href="https://github.com/jagga-123" target="_blank" rel="noopener">GitHub</a></div>
+  </footer>
+
+  <script src="../scripts.js" defer></script>
+</body>
+</html>

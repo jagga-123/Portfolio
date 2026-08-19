@@ -1,1120 +1,1113 @@
 /* =========================================================
-   Portfolio Enhancements
-   Loaded after the inline stylesheet in index.html so these
-   rules can override and extend the original design.
+   Sandeep Kumar — Portfolio
+   Design system: tokens, layout, components.
+   No build step, no external font/CDN requests by design —
+   every typeface below is a system-font stack.
    ========================================================= */
 
+/* ---------- Tokens ---------- */
 :root {
-  --page-bg: #07111f;
-  --page-bg-2: #0c1728;
-  --surface: rgba(10, 18, 33, 0.88);
-  --surface-strong: rgba(9, 17, 32, 0.96);
-  --surface-soft: rgba(255, 255, 255, 0.04);
-  --border-soft: rgba(148, 163, 184, 0.14);
-  --glow: rgba(34, 211, 238, 0.22);
-  --glow-strong: rgba(16, 185, 129, 0.38);
-  --text-strong: #eff6ff;
-  --text-soft: #b7c4d6;
-  --text-faint: #7f90a8;
-  --accent-cyan: #22d3ee;
-  --accent-green: #34d399;
-  --accent-violet: #8b5cf6;
-  --accent-orange: #fb923c;
-  --accent-pink: #f472b6;
-  --shadow-lg: 0 22px 70px rgba(0, 0, 0, 0.35);
+  /* Color — dark is the default brand appearance */
+  --ink: #0b0d12;
+  --ink-raised: #12151c;
+  --ink-raised-2: #171b24;
+  --border: #242832;
+  --border-strong: #343a47;
+  --text: #eef0f4;
+  --text-soft: #9ba3b0;
+  --text-faint: #7d8590; /* WCAG AA-checked: 5.2:1 on --ink */
+  --accent: #d7a75f;
+  --accent-strong: #e8bd7c;
+  --accent-ink: #241a08;
+  --accent-soft: rgba(215, 167, 95, 0.12);
+  --accent-border: rgba(215, 167, 95, 0.35);
+  --success: #4caf7d;
+  --success-soft: rgba(76, 175, 125, 0.12);
+  --success-border: rgba(76, 175, 125, 0.32);
+  --danger: #e0685f;
+  --danger-soft: rgba(224, 104, 95, 0.12);
+
+  /* Type */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", "Cascadia Code", Consolas, "Liberation Mono", monospace;
+  --fs-xs: 0.8125rem;
+  --fs-sm: 0.9375rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.375rem;
+  --fs-xl: 1.75rem;
+  --fs-2xl: 2.25rem;
+  --fs-hero: clamp(1.6rem, 4.5vw, 3.5rem);
+
+  /* Spacing (8px base) */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-24: 6rem;
+
+  /* Radius + elevation */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.24);
+  --shadow-2: 0 20px 48px rgba(0, 0, 0, 0.38);
+  /* Layered "depth" shadow — several soft strata instead of one flat blur */
+  --shadow-3:
+    0 1px 1px rgba(0, 0, 0, 0.18),
+    0 8px 16px rgba(0, 0, 0, 0.16),
+    0 28px 56px rgba(0, 0, 0, 0.28);
+  --shadow-btn: 0 10px 24px rgba(0, 0, 0, 0.28);
+
+  --motion-fast: 160ms;
+  --motion-base: 240ms;
+  --motion-slow: 480ms;
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root[data-theme="light"] {
-  --page-bg: #f4f8ff;
-  --page-bg-2: #e8f0ff;
-  --surface: rgba(255, 255, 255, 0.88);
-  --surface-strong: rgba(255, 255, 255, 0.98);
-  --surface-soft: rgba(15, 23, 42, 0.04);
-  --border-soft: rgba(15, 23, 42, 0.09);
-  --glow: rgba(59, 130, 246, 0.16);
-  --glow-strong: rgba(16, 185, 129, 0.24);
-  --text-strong: #07111f;
-  --text-soft: #334155;
-  --text-faint: #64748b;
-  --shadow-lg: 0 22px 70px rgba(15, 23, 42, 0.16);
+  --ink: #f7f6f3;
+  --ink-raised: #ffffff;
+  --ink-raised-2: #fbfaf7;
+  --border: #e4e1d9;
+  --border-strong: #cfccc2;
+  --text: #16181c;
+  --text-soft: #565a61;
+  --text-faint: #6b6f76; /* WCAG AA-checked: 4.7:1 on light --ink */
+  --accent: #8a5f28; /* WCAG AA-checked: 5.2:1 on light --ink (was #9c6f34 at 4.1:1 — failed) */
+  --accent-strong: #6f4a1e;
+  --accent-ink: #ffffff;
+  --accent-soft: rgba(156, 111, 52, 0.1);
+  --accent-border: rgba(156, 111, 52, 0.3);
+  --success: #2f7d54;
+  --success-soft: rgba(47, 125, 84, 0.1);
+  --success-border: rgba(47, 125, 84, 0.28);
+  --danger: #b3261e;
+  --danger-soft: rgba(179, 38, 30, 0.08);
+  --shadow-1: 0 1px 2px rgba(22, 24, 28, 0.06);
+  --shadow-2: 0 20px 48px rgba(22, 24, 28, 0.12);
+  --shadow-btn: 0 10px 24px rgba(22, 24, 28, 0.16);
 }
 
-html {
-  scroll-behavior: smooth;
+/* ---------- Reset ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
-
 body {
-  background:
-    radial-gradient(circle at top left, rgba(34, 211, 238, 0.12), transparent 25%),
-    radial-gradient(circle at top right, rgba(139, 92, 246, 0.12), transparent 24%),
-    linear-gradient(180deg, var(--page-bg), var(--page-bg-2));
-  color: var(--text-strong);
-  transition:
-    background-color 0.45s ease,
-    color 0.45s ease,
-    filter 0.45s ease;
+  margin: 0;
+  background: var(--ink);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
+h1, h2, h3, h4 { margin: 0; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; margin: 0; padding: 0; }
+img { max-width: 100%; display: block; }
+button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
+input, textarea { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 
-body.is-theme-transitioning,
-body.is-theme-transitioning * {
-  transition-duration: 0.45s !important;
+/* ---------- Skip link ---------- */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -60px;
+  background: var(--accent);
+  color: var(--accent-ink);
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  z-index: 300;
+  transition: top var(--motion-base) var(--ease);
 }
+.skip-link:focus { top: 1rem; }
 
-body::before {
-  opacity: 0.06;
+/* ---------- Layout ---------- */
+.container { max-width: 1180px; margin: 0 auto; padding: 0 1.5rem; }
+section { padding: var(--sp-24) 0; }
+@media (max-width: 720px) { section { padding: var(--sp-16) 0; } }
+.section-head { margin-bottom: var(--sp-12); max-width: 62ch; }
+.section-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: var(--sp-3);
 }
+.section-title { font-size: var(--fs-2xl); }
+.section-sub { margin-top: var(--sp-3); color: var(--text-soft); font-size: var(--fs-md); }
 
-.scroll-progress {
+.reveal { opacity: 0; transform: translateY(20px); transition: opacity 640ms var(--ease), transform 640ms var(--ease); }
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+
+/* ---------- Scroll progress ---------- */
+.scroll-progress { position: fixed; top: 0; left: 0; width: 100%; height: 2px; z-index: 210; background: transparent; }
+.scroll-progress span { display: block; height: 100%; width: 0%; background: var(--accent); transition: width 80ms linear; }
+
+/* ---------- Nav ---------- */
+header.nav {
   position: fixed;
-  left: 0;
   top: 0;
   width: 100%;
-  height: 3px;
-  z-index: 140;
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
-}
-
-.scroll-progress span {
-  display: block;
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan), var(--accent-violet));
-  box-shadow: 0 0 18px rgba(34, 211, 238, 0.55);
-  transition: width 0.08s linear;
-}
-
-header.nav {
-  background: linear-gradient(180deg, rgba(2, 6, 23, 0.72), rgba(2, 6, 23, 0.18));
-  border-bottom: 1px solid var(--border-soft);
-}
-
-:root[data-theme="light"] header.nav {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.4));
-}
-
-.controls .btn {
-  border: 1px solid transparent;
-  transition: transform 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
-}
-
-.controls .btn:hover {
-  transform: translateY(-1px);
-  border-color: var(--border-soft);
-  background: var(--surface-soft);
-}
-
-#themeToggle i {
-  font-size: 1rem;
-  color: var(--text-strong);
-}
-
-.hero {
-  overflow: hidden;
-  position: relative;
-  isolation: isolate;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 20%, rgba(34, 211, 238, 0.11), transparent 18%),
-    radial-gradient(circle at 80% 30%, rgba(139, 92, 246, 0.11), transparent 22%),
-    linear-gradient(90deg, transparent 0 49%, rgba(255, 255, 255, 0.03) 50%, transparent 51% 100%);
-  background-size: 100% 100%, 100% 100%, 72px 72px;
-  opacity: 0.9;
-  pointer-events: none;
-}
-
-.hero-particles {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background-image:
-    radial-gradient(circle, rgba(34, 211, 238, 0.28) 0 1px, transparent 1.5px),
-    radial-gradient(circle, rgba(139, 92, 246, 0.22) 0 1px, transparent 1.4px);
-  background-size: 130px 130px, 180px 180px;
-  background-position: 0 0, 70px 70px;
-  animation: driftParticles 18s linear infinite;
-  opacity: 0.35;
-}
-
-@keyframes driftParticles {
-  from { transform: translate3d(0, 0, 0); }
-  to { transform: translate3d(-120px, -80px, 0); }
-}
-
-.hero-content {
-  position: relative;
-  z-index: 3;
-}
-
-.hero-badge-row {
-  margin-top: 0.65rem;
-}
-
-.open-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 0.9rem;
-  border-radius: 999px;
-  background: rgba(16, 185, 129, 0.12);
-  border: 1px solid rgba(16, 185, 129, 0.28);
-  color: #86efac;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.74rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.06), 0 0 24px rgba(16, 185, 129, 0.08);
-  animation: badgePulse 1.8s ease-in-out infinite;
-}
-
-.open-badge::before {
-  content: "";
-  width: 8px;
-  height: 8px;
-  border-radius: 999px;
-  background: var(--accent-green);
-  box-shadow: 0 0 14px rgba(52, 211, 153, 0.9);
-}
-
-@keyframes badgePulse {
-  0%, 100% { transform: translateY(0); opacity: 0.9; }
-  50% { transform: translateY(-1px); opacity: 1; }
-}
-
-.hero-terminal {
-  margin-top: 1rem;
-  padding: 1rem 1.05rem 1.1rem;
-  border-radius: 18px;
-  border: 1px solid var(--border-soft);
-  background: linear-gradient(180deg, rgba(5, 12, 24, 0.82), rgba(8, 16, 31, 0.94));
-  box-shadow: var(--shadow-lg);
-  max-width: 640px;
-  position: relative;
-  overflow: hidden;
-}
-
-:root[data-theme="light"] .hero-terminal {
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 255, 0.96));
-}
-
-.hero-terminal::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
-  transform: translateX(-100%);
-  animation: terminalShimmer 5.8s ease-in-out infinite;
-}
-
-@keyframes terminalShimmer {
-  40% { transform: translateX(100%); }
-  100% { transform: translateX(100%); }
-}
-
-.terminal-topbar {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  margin-bottom: 0.9rem;
-  color: var(--text-faint);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.72rem;
-}
-
-.terminal-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.14);
-}
-
-.terminal-dot:nth-child(1) { background: #f87171; }
-.terminal-dot:nth-child(2) { background: #fbbf24; }
-.terminal-dot:nth-child(3) { background: #4ade80; }
-
-.terminal-title {
-  margin-left: auto;
-  opacity: 0.85;
-}
-
-.terminal-line {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.95rem;
-  color: var(--text-strong);
-  min-height: 1.8rem;
-  position: relative;
-  z-index: 1;
-}
-
-.terminal-prompt {
-  color: var(--accent-green);
-}
-
-.terminal-caret,
-.role .cursor {
-  color: var(--accent-cyan);
-  animation: blink 1s steps(2, start) infinite;
-}
-
-.hero-chip-cloud {
-  position: relative;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  max-width: 640px;
-  margin-top: 1rem;
-}
-
-.hero-chip-cloud span {
-  padding: 0.55rem 0.8rem;
-  border-radius: 999px;
-  border: 1px solid var(--border-soft);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-soft);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.74rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  box-shadow: 0 12px 30px rgba(2, 6, 23, 0.18);
-  animation: chipFloat 6.5s ease-in-out infinite;
-}
-
-.hero-chip-cloud span:nth-child(2n) { animation-delay: 0.6s; }
-.hero-chip-cloud span:nth-child(3n) { animation-delay: 1.2s; }
-
-@keyframes chipFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
-.stats {
-  gap: 0.85rem;
-}
-
-.stats .stat,
-.gh-box {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--border-soft);
+  z-index: 200;
+  background: color-mix(in srgb, var(--ink) 86%, transparent);
   backdrop-filter: blur(10px);
-  border-radius: 18px;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.16);
+  border-bottom: 1px solid transparent;
+  box-shadow: none;
+  transition: border-color var(--motion-base) var(--ease), box-shadow var(--motion-base) var(--ease), background var(--motion-base) var(--ease);
 }
-
-.stats .num,
-.gh-box .num {
-  text-shadow: 0 0 24px rgba(34, 211, 238, 0.12);
+header.nav.is-scrolled {
+  border-bottom-color: var(--border);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
-
-.stats .label,
-.gh-box .label {
-  letter-spacing: 0.14em;
-}
-
-.skills-showcase {
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 1.25rem;
-  margin-top: 1.35rem;
-}
-
-.skills-radar-card,
-.skills-surface,
-.opportunity-card,
-.journey-card,
-.project-card,
-.gh-box,
-.contact-form,
-.contact-info,
-.cert-card,
-.edu-card,
-.timeline-body {
-  border: 1px solid var(--border-soft);
-  background: var(--surface);
-  box-shadow: var(--shadow-lg);
-  backdrop-filter: blur(16px);
-}
-
-.skills-radar-card {
-  border-radius: 26px;
-  padding: 1.5rem;
+.nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 0; }
+.logo { font-weight: 700; letter-spacing: 0.01em; font-size: var(--fs-md); }
+.nav-links { display: flex; align-items: center; gap: var(--sp-6); position: relative; }
+.nav-links a:not(.btn) {
   position: relative;
-  overflow: hidden;
-}
-
-.skills-radar-card::after {
-  content: "";
-  position: absolute;
-  inset: auto -30% -35% auto;
-  width: 240px;
-  height: 240px;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.14), transparent 62%);
-  pointer-events: none;
-}
-
-.skills-radar-copy {
-  max-width: 420px;
-  margin-bottom: 0.8rem;
-}
-
-.section-pill {
-  display: inline-flex;
-  padding: 0.45rem 0.7rem;
-  border-radius: 999px;
-  border: 1px solid rgba(34, 211, 238, 0.22);
-  color: var(--accent-cyan);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.skills-radar-copy h3 {
-  margin: 0.75rem 0 0.35rem;
-  font-size: 1.35rem;
-}
-
-.skills-radar-copy p {
-  margin: 0;
+  font-size: var(--fs-sm);
   color: var(--text-soft);
+  transition: color var(--motion-fast) var(--ease);
+  padding-bottom: 2px;
 }
-
-.skills-radar-stage {
-  min-height: 360px;
-  display: grid;
-  place-items: center;
-  position: relative;
-}
-
-#skillsRadar {
-  width: min(100%, 480px);
-  height: auto;
-  overflow: visible;
-}
-
-#skillsRadar .radar-ring {
-  fill: none;
-  stroke: rgba(148, 163, 184, 0.12);
-  stroke-width: 1;
-}
-
-#skillsRadar .radar-axis {
-  stroke: rgba(148, 163, 184, 0.16);
-  stroke-width: 1;
-}
-
-#skillsRadar .radar-label {
-  fill: var(--text-soft);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-#skillsRadar .radar-center {
-  fill: var(--accent-green);
-  filter: drop-shadow(0 0 12px rgba(52, 211, 153, 0.8));
-}
-
-#skillsRadar .radar-area {
-  fill: url(#radarFill);
-  stroke: rgba(34, 211, 238, 0.9);
-  stroke-width: 2.5;
-}
-
-#skillsRadar .radar-outline {
-  fill: none;
-  stroke: rgba(255, 255, 255, 0.82);
-  stroke-width: 1.2;
-  stroke-linejoin: round;
-}
-
-.skills-surface {
-  border-radius: 26px;
-  padding: 1.25rem;
-}
-
-.skills-matrix {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.85rem;
-}
-
-.skill-matrix-card {
-  padding: 1rem;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border-soft);
-}
-
-.skill-matrix-card h4 {
-  margin: 0 0 0.45rem;
-  color: var(--text-strong);
-}
-
-.skill-matrix-card p {
-  margin: 0;
-  color: var(--text-soft);
-  font-size: 0.95rem;
-  line-height: 1.55;
-}
-
-.skill-chip-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.65rem;
-  margin-top: 1rem;
-}
-
-.skill-chip-row span {
-  padding: 0.48rem 0.75rem;
-  border-radius: 999px;
-  background: rgba(34, 211, 238, 0.08);
-  border: 1px solid rgba(34, 211, 238, 0.16);
-  color: var(--text-soft);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.73rem;
-}
-
-.journey-track {
-  position: relative;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.95rem;
-  margin-top: 1.6rem;
-}
-
-.journey-track::before {
+.nav-links a:not(.btn)::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  top: 2rem;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.8), rgba(139, 92, 246, 0.8), transparent);
-  opacity: 0.55;
+  bottom: -2px;
+  height: 1.5px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--motion-base) var(--ease-out-expo);
 }
+.nav-links a:not(.btn):hover { color: var(--text); }
+.nav-links a:not(.btn):hover::after { transform: scaleX(1); transform-origin: left; }
+.nav-links a:not(.btn).is-active { color: var(--text); }
 
-.journey-card {
-  position: relative;
-  padding: 1.1rem;
-  border-radius: 20px;
-  background: var(--surface);
-  transform: translateY(0);
-}
-
-.journey-card::before {
-  content: "";
+/* Shared sliding indicator — tracks the active section's link and glides
+   between them (JS sets translateX + width), instead of each link owning
+   its own static underline. One moving mark, Linear-nav style. */
+.nav-indicator {
   position: absolute;
-  left: 1.15rem;
-  top: -0.55rem;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent-green), var(--accent-cyan));
-  box-shadow: 0 0 0 6px rgba(34, 211, 238, 0.08), 0 0 20px rgba(34, 211, 238, 0.35);
-}
-
-.journey-year {
-  margin-top: 0.4rem;
-  margin-bottom: 0.8rem;
-  color: var(--accent-cyan);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.74rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.journey-card h3 {
-  margin: 0 0 0.55rem;
-  color: var(--text-strong);
-  font-size: 1.02rem;
-}
-
-.journey-card p {
-  margin: 0;
-  color: var(--text-soft);
-  line-height: 1.6;
-  font-size: 0.95rem;
-}
-
-.opportunity-card {
-  margin-top: 1.2rem;
-  border-radius: 26px;
-  padding: 1.4rem 1.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.opportunity-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at left top, rgba(16, 185, 129, 0.18), transparent 28%),
-    radial-gradient(circle at right top, rgba(34, 211, 238, 0.14), transparent 26%);
+  left: 0;
+  bottom: -2px;
+  height: 1.5px;
+  width: 0;
+  background: var(--accent);
+  border-radius: 2px;
+  opacity: 0;
   pointer-events: none;
+  transform: translateX(0);
+  transition: transform 420ms var(--ease-out-expo), width 420ms var(--ease-out-expo), opacity 200ms var(--ease);
 }
-
-.opportunity-copy,
-.opportunity-actions {
-  position: relative;
-  z-index: 1;
-}
-
-.opportunity-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  padding: 0.4rem 0.7rem;
+.nav-controls { display: flex; align-items: center; gap: var(--sp-3); }
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
   border-radius: 999px;
-  background: rgba(16, 185, 129, 0.1);
-  color: #86efac;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
-.pulsing-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--accent-green);
-  box-shadow: 0 0 20px rgba(52, 211, 153, 0.8);
-  animation: pulseDot 1.4s ease-in-out infinite;
-}
-
-@keyframes pulseDot {
-  0%, 100% { transform: scale(0.88); opacity: 0.8; }
-  50% { transform: scale(1.15); opacity: 1; }
-}
-
-.opportunity-copy h2 {
-  margin: 0.75rem 0 0.35rem;
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
-}
-
-.opportunity-copy p {
-  margin: 0;
+  border: 1px solid var(--border);
   color: var(--text-soft);
-  max-width: 62ch;
-  line-height: 1.6;
+  transition: border-color var(--motion-fast) var(--ease), color var(--motion-fast) var(--ease);
 }
-
-.opportunity-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-}
-
-.opportunity-actions .btn-hero {
-  min-width: 180px;
-  text-align: center;
-}
-
-.project-card {
-  cursor: pointer;
-  border-radius: 22px;
-  padding: 1.15rem;
-  transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease;
-  position: relative;
-  overflow: hidden;
-}
-
-.project-card:hover {
-  transform: translateY(-6px);
-  border-color: rgba(34, 211, 238, 0.5);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
-}
-
-.project-card::after {
-  content: "";
+.theme-toggle:hover { color: var(--accent); border-color: var(--border-strong); transform: translateY(-1px); }
+.theme-toggle { position: relative; overflow: hidden; transition: color var(--motion-fast) var(--ease), border-color var(--motion-fast) var(--ease), transform var(--motion-fast) var(--ease); }
+.theme-toggle svg {
+  width: 17px;
+  height: 17px;
   position: absolute;
-  inset: auto 0 0;
-  height: 2px;
-  background: linear-gradient(90deg, var(--accent-green), var(--accent-cyan), var(--accent-violet));
-  opacity: 0.85;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(0deg) scale(1);
+  opacity: 1;
+  transition: transform var(--motion-base) var(--ease-out-expo), opacity var(--motion-fast) var(--ease);
 }
+.theme-toggle .icon-moon { opacity: 0; transform: translate(-50%, -50%) rotate(-70deg) scale(0.5); }
+:root[data-theme="light"] .theme-toggle .icon-sun { opacity: 0; transform: translate(-50%, -50%) rotate(70deg) scale(0.5); }
+:root[data-theme="light"] .theme-toggle .icon-moon { opacity: 1; transform: translate(-50%, -50%) rotate(0deg) scale(1); }
 
-.proj-title,
-.project-title {
-  color: var(--text-strong);
-}
-
-.project-meta,
-.proj-meta {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  color: var(--text-faint);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-}
-
-.project-description,
-.proj-desc {
-  color: var(--text-soft);
-  line-height: 1.65;
-}
-
-.project-badges,
-.proj-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-top: 0.95rem;
-}
-
-.project-badges span,
-.proj-tag,
-.repo-badge {
-  padding: 0.38rem 0.62rem;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--border-soft);
-  color: var(--text-soft);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.72rem;
-}
-
-.project-actions,
-.proj-links {
-  display: flex;
-  gap: 0.7rem;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-}
-
-.project-actions a,
-.proj-links a,
-.repo-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.65rem 0.85rem;
-  border-radius: 14px;
-  border: 1px solid var(--border-soft);
-  background: rgba(255, 255, 255, 0.04);
-  color: var(--text-strong);
-  text-decoration: none;
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.75rem;
-  transition: transform 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-}
-
-.project-actions a:hover,
-.proj-links a:hover,
-.repo-link:hover {
-  transform: translateY(-1px);
-  border-color: rgba(34, 211, 238, 0.48);
-  color: var(--accent-cyan);
-}
-
-.project-stats {
-  display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  margin-top: 0.9rem;
-  color: var(--text-faint);
-  font-family: "JetBrains Mono", monospace;
-  font-size: 0.72rem;
-}
-
-.project-stats span {
-  display: inline-flex;
-  gap: 0.35rem;
-  align-items: center;
-}
-
-.project-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 220;
+.hamburger {
   display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  align-items: center;
+  justify-content: center;
 }
+.hamburger svg { width: 18px; height: 18px; }
 
-.project-modal.is-open {
-  display: block;
+.mobile-menu {
+  position: fixed;
+  inset: 64px 0 auto 0;
+  background: var(--ink-raised);
+  border-bottom: 1px solid var(--border);
+  padding: var(--sp-6) 1.5rem var(--sp-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  z-index: 199;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-10px);
+  transition: opacity var(--motion-base) var(--ease), transform var(--motion-base) var(--ease), visibility 0s linear var(--motion-base);
 }
-
-.project-modal-backdrop {
-  position: absolute;
-  inset: 0;
-  background: rgba(2, 6, 23, 0.74);
-  backdrop-filter: blur(8px);
+.mobile-menu.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+  transition: opacity var(--motion-base) var(--ease), transform var(--motion-base) var(--ease), visibility 0s linear 0s;
 }
-
-.project-modal-panel {
-  position: relative;
-  z-index: 1;
-  width: min(980px, calc(100% - 1.25rem));
-  max-height: calc(100vh - 1.25rem);
-  margin: 0.65rem auto;
-  padding: 1.2rem;
-  border-radius: 26px;
-  background: var(--surface-strong);
-  border: 1px solid var(--border-soft);
-  box-shadow: var(--shadow-lg);
-  overflow: auto;
+.mobile-menu a {
+  padding: 0.75rem 0.25rem;
+  color: var(--text-soft);
+  border-bottom: 1px solid var(--border);
+  transition: color var(--motion-fast) var(--ease), padding-left var(--motion-fast) var(--ease);
 }
+.mobile-menu a:hover { color: var(--text); padding-left: 0.4rem; }
 
-.project-modal-close {
-  position: sticky;
-  top: 0;
-  margin-left: auto;
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.4rem;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  border: 1px solid transparent;
+  transition: translate 320ms var(--ease-out-expo), box-shadow 320ms var(--ease-out-expo), border-color var(--motion-fast) var(--ease), background var(--motion-fast) var(--ease), color var(--motion-fast) var(--ease);
+  white-space: nowrap;
+}
+/* Lift uses the standalone `translate` property rather than `transform` so
+   it composes cleanly with the magnetic follow effect below, which sets
+   `transform` directly via JS — the two apply together instead of one
+   clobbering the other. */
+.btn:hover { translate: 0 -2px; box-shadow: var(--shadow-btn); }
+.btn:active { translate: 0 -1px; transition-duration: 100ms; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { background: var(--accent-strong); }
+.btn-secondary { border-color: var(--border-strong); color: var(--text); }
+.btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+.btn-ghost { color: var(--text-soft); }
+.btn-ghost:hover { color: var(--text); }
+.btn-sm { padding: 0.6rem 1rem; font-size: var(--fs-xs); }
+.btn-block { width: 100%; }
+
+.icon-link {
   display: grid;
   place-items: center;
   width: 42px;
   height: 42px;
-  border-radius: 14px;
-  border: 1px solid var(--border-soft);
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text-strong);
-}
-
-.project-modal-content {
-  margin-top: 0.8rem;
-}
-
-.project-modal-grid {
-  display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
-  gap: 1rem;
-}
-
-.project-modal-media {
-  display: grid;
-  gap: 0.75rem;
-}
-
-.project-modal-media img,
-.project-modal-media .placeholder-shot {
-  width: 100%;
-  border-radius: 20px;
-  border: 1px solid var(--border-soft);
-  background: rgba(255, 255, 255, 0.04);
-  object-fit: cover;
-}
-
-.project-modal-media .placeholder-shot {
-  display: grid;
-  place-items: center;
-  min-height: 240px;
-  color: var(--text-faint);
-  font-family: "JetBrains Mono", monospace;
-}
-
-.project-modal-copy h3 {
-  margin-top: 0;
-  margin-bottom: 0.5rem;
-  font-size: clamp(1.4rem, 3vw, 2rem);
-}
-
-.project-modal-copy p {
+  border-radius: 999px;
+  border: 1px solid var(--border);
   color: var(--text-soft);
-  line-height: 1.68;
+  transition: border-color var(--motion-fast) var(--ease), color var(--motion-fast) var(--ease), transform var(--motion-fast) var(--ease);
+}
+.icon-link:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+.icon-link svg { width: 18px; height: 18px; }
+
+/* ---------- Cards ---------- */
+.card {
+  background: var(--ink-raised);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-1);
+  transition: border-color var(--motion-base) var(--ease), box-shadow var(--motion-base) var(--ease), transform var(--motion-base) var(--ease);
+}
+/* :focus-within, not just :hover — a keyboard user tabbing to a link
+   inside the card should see the same elevation a mouse hover gives,
+   not just a thin outline on one small link buried in the content. */
+.card.is-interactive:hover, .card.is-interactive:focus-within { border-color: var(--accent-border); box-shadow: var(--shadow-3); transform: translateY(-6px); }
+
+/* Glassmorphism variant — used sparingly (Skills, About) so it reads as a
+   deliberate accent, not the default card treatment everywhere. */
+.card.is-glass {
+  background: color-mix(in srgb, var(--ink-raised) 62%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .card.is-glass { background: var(--ink-raised); }
 }
 
-.project-modal-list {
-  margin: 0.9rem 0 0;
-  padding-left: 1rem;
-  color: var(--text-soft);
-}
-
-.project-modal-list li {
-  margin: 0.45rem 0;
-}
-
-.project-modal-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem;
-  margin-top: 1rem;
-}
-
-.project-modal-links a {
+/* ---------- Hero ---------- */
+.hero { padding-top: calc(var(--sp-24) + 3rem); padding-bottom: var(--sp-16); }
+.hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: var(--sp-16); align-items: center; }
+/* Quick-facts strip — level, availability, stack, all scannable in one
+   glance instead of requiring the reader to infer them from prose. */
+.hero-facts { display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem; }
+.hero-fact {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.75rem 0.95rem;
-  border-radius: 14px;
-  border: 1px solid var(--border-soft);
-  color: var(--text-strong);
-  text-decoration: none;
-  background: rgba(255, 255, 255, 0.04);
+  gap: 0.5rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.02em;
+}
+.hero-fact.is-live { background: var(--success-soft); border-color: var(--success-border); color: var(--success); }
+.eyebrow-dot { width: 7px; height: 7px; border-radius: 999px; background: var(--success); }
+@media (prefers-reduced-motion: no-preference) {
+  .eyebrow-dot { animation: pulseDot 2.2s ease-in-out infinite; }
+}
+@keyframes pulseDot { 0%, 100% { opacity: 0.55; } 50% { opacity: 1; } }
+
+/* No max-width cap here: the manual per-line breaks below (plus the grid
+   column they sit in) already own the wrap width. A ch-based cap on top of
+   that was fighting them at small sizes — this is the fix for that. */
+.hero h1 { font-size: var(--fs-hero); line-height: 1.1; letter-spacing: -0.02em; margin: var(--sp-6) 0 var(--sp-6); }
+/* Weight + color contrast inside the display headline (not a font-family
+   or size change, which would fight the line-mask's fixed-width budget) —
+   the phrase that matters most reads as a lighter, accent-colored pass
+   through the same bold type, the Stripe/Linear way of drawing the eye
+   to a term without breaking the line's rhythm. */
+.text-mark { font-weight: 500; color: var(--accent-strong); }
+.hero-lede { font-size: var(--fs-md); color: var(--text-soft); max-width: 52ch; margin-bottom: var(--sp-8); }
+.cta-row { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-bottom: var(--sp-12); }
+
+/* Hero metrics row — one confident stat line instead of a repeated
+   checklist. Numerals lead, labels are secondary; thin dividers do the
+   grouping instead of borders/pills, so it reads as data, not badges. */
+.hero-stats { display: flex; flex-wrap: wrap; gap: 0; padding-top: var(--sp-6); border-top: 1px solid var(--border); }
+.hero-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 0 var(--sp-6);
+  border-left: 1px solid var(--border);
+}
+.hero-stat:first-child { padding-left: 0; border-left: none; }
+.hero-stat-num { font-family: var(--font-mono); font-size: var(--fs-xl); font-weight: 700; color: var(--text); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.hero-stat-label { font-size: var(--fs-xs); color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.04em; }
+/* Four dividers-in-a-row need real width to avoid an awkward mid-row wrap
+   (a stray left border landing at the start of a wrapped line). That
+   width isn't a clean function of viewport alone — the hero-copy column
+   is ~full-width below the 900px hero-grid breakpoint but narrows back
+   down again just above it, before the container hits its own max-width
+   at 1180px — so both zones get the plain, dividerless 2x2 fallback. */
+@media (max-width: 660px), (min-width: 901px) and (max-width: 1180px) {
+  .hero-stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); }
+  .hero-stat { padding: 0; border-left: none; }
 }
 
-.project-modal-links a:hover {
-  border-color: rgba(34, 211, 238, 0.5);
-  color: var(--accent-cyan);
+.hero-visual { display: flex; justify-content: center; }
+.photo-frame {
+  position: relative;
+  width: min(100%, 340px);
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--ink-raised);
+  box-shadow: var(--shadow-2);
 }
-
-.cursor-dot,
-.cursor-trail {
-  position: fixed;
-  top: 0;
-  left: 0;
+.photo-frame img { width: 100%; height: 100%; object-fit: cover; }
+/* Glass highlight layer — a static diagonal sheen over the photo, the third
+   of the frame/image/glass stack. No motion of its own; the frame beneath
+   it (border + shadow + background) and the mouse/scroll transform on
+   .hero-visual below are what give the whole stack its depth. */
+.photo-glass {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0.03) 22%, transparent 46%, transparent 72%, rgba(255, 255, 255, 0.05) 100%);
+  mix-blend-mode: overlay;
   pointer-events: none;
-  z-index: 260;
-  border-radius: 50%;
-  mix-blend-mode: screen;
-  will-change: transform;
 }
-
-.cursor-dot {
-  width: 10px;
-  height: 10px;
-  margin-left: -5px;
-  margin-top: -5px;
-  background: radial-gradient(circle, rgba(255, 255, 255, 1), rgba(34, 211, 238, 0.95));
-  box-shadow: 0 0 18px rgba(34, 211, 238, 0.95);
+:root[data-theme="light"] .photo-glass {
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.1) 22%, transparent 46%, transparent 72%, rgba(255, 255, 255, 0.2) 100%);
+  mix-blend-mode: soft-light;
 }
-
-.cursor-trail {
-  width: 34px;
-  height: 34px;
-  margin-left: -17px;
-  margin-top: -17px;
-  background: radial-gradient(circle, rgba(34, 211, 238, 0.24), transparent 62%);
-  border: 1px solid rgba(34, 211, 238, 0.14);
-  filter: blur(0.2px);
-}
-
-body.cursor-hidden .cursor-dot,
-body.cursor-hidden .cursor-trail {
-  opacity: 0;
-}
-
-.contact-form {
-  border-radius: 24px;
-  padding: 1.25rem;
-}
-
-.form-input {
-  border-radius: 16px;
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
-}
-
-.form-input:focus {
-  transform: translateY(-1px);
-  box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.12);
-}
-
-.form-input.is-invalid {
-  border-color: #fb7185;
-  box-shadow: 0 0 0 4px rgba(251, 113, 133, 0.12);
-  animation: fieldShake 0.32s ease;
-}
-
-@keyframes fieldShake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-3px); }
-  75% { transform: translateX(3px); }
-}
-
-.field-error {
-  margin-top: 0.45rem;
-  color: #fda4af;
-  font-size: 0.82rem;
-  min-height: 1rem;
-}
-
-.form-success {
-  border-radius: 18px;
-}
-
-.success-burst {
-  position: fixed;
-  z-index: 280;
-  pointer-events: none;
-  font-size: 1.1rem;
-  animation: burstFly 1.2s ease-out forwards;
-}
-
-@keyframes burstFly {
-  0% { transform: translateY(0) scale(0.8); opacity: 0; }
-  15% { opacity: 1; }
-  100% { transform: translateY(-70px) scale(1.3); opacity: 0; }
-}
-
-.back-to-top {
-  border: 1px solid var(--border-soft);
-  background: var(--surface);
-  box-shadow: var(--shadow-lg);
-}
-
-.github-insights {
-  margin-top: 1rem;
-}
-
-.gh-stats-wrap {
-  gap: 0.9rem;
-}
-
-.gh-box {
-  padding: 1.2rem;
-}
-
-.gh-box:hover {
-  transform: translateY(-4px);
-  border-color: rgba(34, 211, 238, 0.4);
-}
-
-.gh-box .label {
-  color: var(--text-faint);
-}
-
-.lang-grid {
-  margin-top: 1rem;
-}
-
-.lang-bar {
-  height: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-soft);
-}
-
-.lang-bar .fill {
-  box-shadow: 0 0 18px rgba(34, 211, 238, 0.18);
-}
-
-.mobile-menu {
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
-  background: var(--surface-strong);
-}
-
-.mobile-menu a {
-  color: var(--text-soft);
-  border: 1px solid transparent;
-}
-
-.mobile-menu a:hover {
-  color: var(--text-strong);
-  border-color: var(--border-soft);
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.section-title,
-.hero-name .solid {
-  text-shadow: 0 0 30px rgba(34, 211, 238, 0.05);
-}
-
-.hero-name .outline {
-  -webkit-text-stroke: 1.5px rgba(255, 255, 255, 0.92);
-}
-
-:root[data-theme="light"] .hero-name .outline {
-  -webkit-text-stroke: 1.5px rgba(7, 17, 31, 0.9);
-}
-
-.role {
-  color: var(--text-soft);
-}
-
-.tagline {
-  color: var(--text-soft);
-}
-
-.section-sub,
-.about-text p,
-.contact-info p,
-.timeline-body ul li,
-.edu-card p,
-.cert-card,
-.proj-desc {
-  color: var(--text-soft);
-}
-
-.section-tag {
-  color: var(--accent-green);
-  letter-spacing: 0.16em;
-}
-
-@media (max-width: 1100px) {
-  .skills-showcase,
-  .project-modal-grid,
-  .journey-track,
-  .opportunity-card {
-    grid-template-columns: 1fr;
-  }
-
-  .journey-track::before {
-    left: 1rem;
-    right: auto;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    height: auto;
-    background: linear-gradient(180deg, transparent, rgba(34, 211, 238, 0.8), rgba(139, 92, 246, 0.8), transparent);
-  }
-
-  .journey-card {
-    padding-left: 1.35rem;
-  }
-
-  .journey-card::before {
-    left: 0.55rem;
-  }
+.status-pill {
+  position: absolute;
+  left: 50%;
+  bottom: -18px;
+  transform: translateX(-50%);
+  background: var(--ink-raised-2);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 0.6rem 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  white-space: nowrap;
+  box-shadow: var(--shadow-1);
 }
 
 @media (max-width: 900px) {
-  .skills-matrix {
-    grid-template-columns: 1fr;
-  }
-
-  .opportunity-card {
-    align-items: flex-start;
-  }
-
-  .opportunity-actions .btn-hero {
-    min-width: 0;
-    width: 100%;
-  }
+  .hero-grid { grid-template-columns: 1fr; text-align: center; }
+  .hero h1 { max-width: none; margin-left: auto; margin-right: auto; }
+  .hero-lede { margin-left: auto; margin-right: auto; }
+  .cta-row { justify-content: center; }
+  .hero-facts, .hero-stats { justify-content: center; }
+  .hero-visual { order: -1; margin-bottom: var(--sp-6); }
 }
 
-@media (max-width: 720px) {
-  .hero-terminal,
-  .skills-radar-card,
-  .skills-surface,
-  .opportunity-card,
-  .project-modal-panel {
-    border-radius: 20px;
-  }
+/* ---------- About ---------- */
+.about-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--sp-16); }
+.about-copy p { color: var(--text-soft); margin-bottom: var(--sp-4); font-size: var(--fs-md); }
+.about-quote {
+  border-left: 3px solid var(--accent);
+  padding: var(--sp-4) var(--sp-6);
+  margin: var(--sp-6) 0;
+  background: var(--accent-soft);
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  font-size: var(--fs-md);
+  color: var(--text);
+}
+.chip-row { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: var(--sp-6); }
+.chip {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: 0.4rem 0.8rem;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent-strong);
+}
+.about-cards { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); align-content: start; }
+.about-card { padding: var(--sp-6); }
+.about-card h3 { font-size: var(--fs-md); margin-bottom: var(--sp-2); }
+.about-card p { color: var(--text-soft); font-size: var(--fs-sm); }
 
-  .hero-chip-cloud {
-    display: none;
-  }
+/* GitHub trust block */
+.gh-block { margin-top: var(--sp-8); padding: var(--sp-6); }
+.gh-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-4); margin-bottom: var(--sp-4); flex-wrap: wrap; }
+.gh-head h3 { font-size: var(--fs-md); }
+.gh-head a { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-soft); }
+.gh-head a:hover { color: var(--accent); }
+.gh-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-4); }
+.gh-stat { text-align: center; padding: var(--sp-4) var(--sp-2); border-radius: var(--radius-md); background: var(--ink-raised-2); border: 1px solid var(--border); }
+.gh-stat .num { font-family: var(--font-mono); font-weight: 700; font-size: var(--fs-lg); font-variant-numeric: tabular-nums; }
+.gh-stat .label { font-size: var(--fs-xs); color: var(--text-faint); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.2rem; }
+.gh-note { margin-top: var(--sp-3); font-size: var(--fs-xs); color: var(--text-faint); }
+@media (max-width: 720px) { .gh-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
-  .cursor-dot,
-  .cursor-trail {
-    display: none;
-  }
+/* ---------- Skills ---------- */
+.skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-4); }
+.skill-card {
+  padding: var(--sp-6);
+  transition: border-color var(--motion-base) var(--ease), transform var(--motion-base) var(--ease), box-shadow var(--motion-base) var(--ease);
+}
+.skill-card:hover { border-color: var(--accent-border); transform: translateY(-3px); box-shadow: var(--shadow-2); }
+.skill-card h3 { font-size: var(--fs-md); color: var(--accent); margin-bottom: var(--sp-4); display: flex; align-items: center; gap: var(--sp-3); }
+.skill-card h3::after { content: ""; flex: 1; height: 1px; background: var(--border); }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.skill-tag {
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  padding: 0.45rem 0.8rem;
+  border-radius: var(--radius-sm);
+  background: var(--ink-raised-2);
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  transition: border-color var(--motion-fast) var(--ease), color var(--motion-fast) var(--ease), transform var(--motion-fast) var(--ease);
+}
+.skill-tag:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+@media (max-width: 720px) { .skills-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Projects ---------- */
+.projects-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--sp-4); }
+.project-card { padding: var(--sp-6); display: flex; flex-direction: column; position: relative; overflow: hidden; }
+.project-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--accent), transparent 55%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-base) var(--ease);
+}
+.project-card:hover::before { opacity: 1; }
+/* Mouse-follow spotlight — --mx/--my set per-frame by JS, in % of card size */
+.project-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), var(--accent-soft), transparent 65%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--motion-base) var(--ease);
+  z-index: 0;
+}
+.project-card:hover::after { opacity: 1; }
+.project-card > * { position: relative; z-index: 1; }
+.project-thumb {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-md);
+  margin-bottom: var(--sp-4);
+  background: var(--ink-raised-2);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  position: relative;
+  transition: transform var(--motion-slow) var(--ease-out-expo);
+}
+.project-card:hover .project-thumb { transform: scale(1.03); }
+.project-thumb picture, .project-thumb img { width: 100%; height: 100%; display: block; }
+.project-thumb img { object-fit: cover; object-position: top; }
+.project-thumb::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, transparent 30%, color-mix(in srgb, var(--accent) 16%, transparent) 50%, transparent 70%);
+  transform: translateX(-120%);
+  transition: transform var(--motion-slow) var(--ease-out-expo);
+  z-index: 2;
+  pointer-events: none;
+}
+.project-card:hover .project-thumb::before { transform: translateX(120%); }
+
+/* Cover treatment for the two projects without a captured screenshot yet —
+   a small brand mark + title + stack on a flat dark surface with a fine
+   grid line texture, the way a repo's og-image or a Linear/Notion card
+   cover reads: quiet and deliberate, not a giant letter in a gradient box.
+   Swap in a real <img> (see the two with screenshots below) and this
+   whole block can come off. */
+.project-thumb.is-cover { display: block; }
+.cover-grid {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--border-strong) 55%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--border-strong) 55%, transparent) 1px, transparent 1px);
+  background-size: 26px 26px;
+  -webkit-mask-image: radial-gradient(120% 100% at 24% 100%, #000 35%, transparent 88%);
+  mask-image: radial-gradient(120% 100% at 24% 100%, #000 35%, transparent 88%);
+}
+.cover-content {
+  position: absolute;
+  left: var(--sp-6);
+  bottom: var(--sp-6);
+  right: var(--sp-6);
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+.cover-badge {
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  display: grid;
+  place-items: center;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.02em;
+}
+.cover-title { font-size: var(--fs-md); font-weight: 700; color: var(--text); letter-spacing: -0.01em; }
+.cover-stack { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.cover-stack span { font-family: var(--font-mono); font-size: 0.65rem; padding: 0.25rem 0.55rem; border-radius: 6px; background: var(--ink-raised); border: 1px solid var(--border); color: var(--text-faint); }
+
+.project-card h3 { font-size: var(--fs-lg); margin-bottom: var(--sp-3); }
+/* Problem / Decision / Outcome — a compact spec list, not prose. Every
+   value here is a real, checkable fact about the build (role counts,
+   listing counts, transport layers) — never an invented metric. */
+.project-spec { flex-grow: 1; margin-bottom: var(--sp-4); display: flex; flex-direction: column; gap: 0.55rem; }
+.spec-row { display: flex; gap: 0.7rem; }
+.spec-row dt { flex: 0 0 78px; padding-top: 0.1rem; font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.03em; text-transform: uppercase; color: var(--accent); line-height: 1.3; }
+.spec-row dd { margin: 0; font-size: var(--fs-sm); color: var(--text-soft); line-height: 1.5; }
+.project-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: var(--sp-4); }
+.project-tag { font-family: var(--font-mono); font-size: 0.72rem; padding: 0.3rem 0.6rem; border-radius: var(--radius-sm); background: var(--ink-raised-2); border: 1px solid var(--border); color: var(--text-faint); }
+.project-actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); }
+@media (max-width: 900px) { .projects-grid { grid-template-columns: 1fr; } }
+
+/* ---------- Timeline / Experience ---------- */
+.timeline { position: relative; padding-left: var(--sp-8); }
+.timeline::before { content: ""; position: absolute; left: 6px; top: 6px; bottom: 6px; width: 2px; background: var(--border); }
+.timeline-item { position: relative; margin-bottom: var(--sp-8); }
+.timeline-item:last-child { margin-bottom: 0; }
+.timeline-item::after {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--sp-8) + 1.5px);
+  top: 0;
+  bottom: calc(-1 * var(--sp-8) + 0.4rem);
+  width: 1px;
+  background: var(--accent);
+  opacity: 0.55;
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform 700ms var(--ease) 120ms;
+}
+.timeline-item.is-visible::after { transform: scaleY(1); }
+.timeline-item:last-child::after { display: none; }
+.timeline-dot {
+  position: absolute;
+  left: calc(-1 * var(--sp-8) + 1px);
+  top: 0.4rem;
+  width: 11px;
+  height: 11px;
+  border-radius: 999px;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--ink);
+  transform: scale(0.4);
+  opacity: 0;
+  transition: transform 420ms var(--ease) 80ms, opacity 420ms var(--ease) 80ms;
+}
+.timeline-item.is-visible .timeline-dot { transform: scale(1); opacity: 1; }
+.timeline-body { padding: var(--sp-6); }
+.exp-head { display: flex; justify-content: space-between; gap: var(--sp-4); flex-wrap: wrap; margin-bottom: var(--sp-3); }
+.exp-role { font-size: var(--fs-lg); }
+.exp-org { color: var(--accent); font-size: var(--fs-sm); margin-top: 0.2rem; }
+.exp-period { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-soft); border: 1px solid var(--border); border-radius: 999px; padding: 0.35rem 0.8rem; white-space: nowrap; height: fit-content; }
+.exp-list li { position: relative; padding-left: var(--sp-6); margin-bottom: 0.6rem; color: var(--text-soft); font-size: var(--fs-sm); }
+.exp-list li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+.exp-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: var(--sp-4); }
+.exp-tag { font-family: var(--font-mono); font-size: 0.72rem; padding: 0.3rem 0.6rem; border-radius: var(--radius-sm); background: var(--accent-soft); border: 1px solid var(--accent-border); color: var(--accent-strong); }
+
+/* ---------- Education ----------
+   One entry, presented with the weight a single fact deserves: a badge +
+   two-line institution block inside the same timeline rhythm as Experience
+   directly above it, rather than a bare card — reads as a deliberate
+   milestone, not a thin section padded out to look busy. */
+.edu-timeline { max-width: 640px; }
+.edu-card { display: flex; align-items: flex-start; gap: var(--sp-6); padding: var(--sp-6); }
+.edu-badge {
+  flex-shrink: 0;
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+}
+.edu-badge svg { width: 26px; height: 26px; }
+.edu-content { flex: 1; min-width: 0; }
+.edu-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--sp-3); margin-bottom: var(--sp-3); }
+.edu-degree { font-size: var(--fs-md); }
+.edu-org { display: flex; align-items: center; gap: 0.55rem; color: var(--text); font-size: var(--fs-sm); margin-bottom: 0.35rem; }
+.edu-org svg { width: 16px; height: 16px; color: var(--accent); flex-shrink: 0; }
+.edu-affiliation { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-faint); }
+/* Prior schooling — deliberately quiet: plain lines, no icon, no card, no
+   motion of its own (it just rides the parent card's one entrance
+   transition). ~35% below the degree heading (--fs-md, 18px) so it reads
+   as supporting detail underneath the B.Tech record, not a second
+   credential competing with it. */
+.edu-prior { margin-top: 0.65rem; }
+.edu-prior-label { display: block; font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-faint); opacity: 0.75; margin-bottom: 0.25rem; }
+.edu-prior-item { font-size: 0.72rem; line-height: 1.6; color: var(--text-faint); }
+@media (max-width: 560px) {
+  .edu-card { flex-direction: column; }
+  .edu-top { flex-direction: column; align-items: flex-start; gap: var(--sp-2); }
+}
+
+/* ---------- Certifications ---------- */
+.cert-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--sp-4); }
+.cert-card { display: flex; flex-direction: column; gap: 0.35rem; padding: var(--sp-6); }
+.cert-card h3 { font-size: var(--fs-sm); font-weight: 600; }
+.cert-issuer { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--accent); }
+.cert-date { font-size: var(--fs-xs); color: var(--text-faint); }
+
+/* ---------- Contact ---------- */
+.contact-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: var(--sp-16); }
+/* Grid items default to min-width:auto (their content's min-content size),
+   which is what let the unbroken email address force this whole column —
+   and the page — wider than the viewport on narrow phones regardless of
+   the overflow-wrap rule above. min-width:0 is the standard release valve. */
+.contact-grid > * { min-width: 0; }
+.contact-lede { color: var(--text-soft); font-size: var(--fs-md); margin-bottom: var(--sp-6); }
+.contact-email-row { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-3); margin-bottom: var(--sp-6); }
+.contact-email { display: inline-block; max-width: 100%; overflow-wrap: break-word; font-size: var(--fs-lg); font-weight: 600; border-bottom: 2px solid var(--accent); padding-bottom: 0.2rem; transition: color var(--motion-fast) var(--ease); }
+.contact-email:hover { color: var(--accent-strong); }
+
+/* Copy-email button — icon swaps copy → check on confirmed clipboard
+   write (same cross-fade/scale technique as the theme toggle's sun/moon
+   swap, reused rather than inventing a second icon-transition style). */
+.copy-email-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  font-size: var(--fs-xs);
+  font-family: var(--font-mono);
+  transition: border-color var(--motion-fast) var(--ease), color var(--motion-fast) var(--ease), transform var(--motion-fast) var(--ease);
+}
+.copy-email-btn:hover { border-color: var(--accent); color: var(--accent); }
+.copy-email-btn:active { transform: translateY(1px); }
+.copy-email-btn .icon-copy, .copy-email-btn .icon-check {
+  width: 14px;
+  height: 14px;
+  position: relative;
+  transition: transform var(--motion-base) var(--ease-out-expo), opacity var(--motion-fast) var(--ease);
+}
+.copy-email-btn .icon-check { position: absolute; left: 0.85rem; opacity: 0; transform: scale(0.5); color: var(--success); }
+.copy-email-btn .icon-copy { opacity: 1; transform: scale(1); }
+.copy-email-btn.is-copied { border-color: var(--success-border); color: var(--success); }
+.copy-email-btn.is-copied .icon-copy { opacity: 0; transform: scale(0.5); }
+.copy-email-btn.is-copied .icon-check { opacity: 1; transform: scale(1); }
+.copy-email-btn.is-error { border-color: var(--danger); color: var(--danger); }
+@media (prefers-reduced-motion: reduce) {
+  .copy-email-btn .icon-copy, .copy-email-btn .icon-check { transition: opacity var(--motion-fast) var(--ease); transform: none !important; }
+}
+
+.social-row { display: flex; gap: var(--sp-3); margin-bottom: var(--sp-8); }
+.avail-row { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.avail-pill { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--success); background: var(--success-soft); border: 1px solid var(--success-border); border-radius: 999px; padding: 0.4rem 0.8rem; }
+
+.contact-form { padding: var(--sp-8); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); margin-bottom: var(--sp-4); }
+.form-group { display: flex; flex-direction: column; gap: 0.5rem; }
+.form-group label { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-soft); }
+.form-input {
+  background: var(--ink-raised-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  color: var(--text);
+  transition: border-color var(--motion-fast) var(--ease), box-shadow var(--motion-fast) var(--ease);
+}
+.form-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); outline: none; }
+.form-input.is-invalid { border-color: var(--danger); }
+textarea.form-input { min-height: 140px; resize: vertical; }
+.field-error { min-height: 1rem; font-size: 0.8rem; color: var(--danger); }
+.form-note { margin-top: var(--sp-2); font-size: var(--fs-xs); color: var(--text-faint); }
+.form-status { margin-top: var(--sp-4); border-radius: var(--radius-sm); padding: 0.85rem 1rem; font-size: var(--fs-sm); display: none; }
+.form-status.is-success { display: block; background: var(--success-soft); border: 1px solid var(--success-border); color: var(--success); }
+.form-status.is-error { display: block; background: var(--danger-soft); border: 1px solid var(--danger); color: var(--danger); }
+@media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr; } .form-row { grid-template-columns: 1fr; } }
+
+/* ---------- Footer ---------- */
+footer.site { border-top: 1px solid var(--border); padding: var(--sp-8) 0; text-align: center; color: var(--text-faint); font-size: var(--fs-sm); }
+/* Underlined, not color-only — a link inline with plain footer text needs a
+   non-color cue to be distinguishable (WCAG 1.4.1), and the accent-on-faint
+   contrast between link and surrounding text was too low to rely on alone. */
+footer.site a { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; }
+
+.back-to-top {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  width: 46px;
+  height: 46px;
+  border-radius: 999px;
+  background: var(--ink-raised);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity var(--motion-base) var(--ease), transform var(--motion-base) var(--ease), border-color var(--motion-fast) var(--ease);
+  z-index: 150;
+}
+.back-to-top.is-visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.back-to-top:hover { border-color: var(--accent); color: var(--accent); }
+.back-to-top svg { width: 18px; height: 18px; }
+
+/* ---------- Responsive: nav + general ---------- */
+@media (max-width: 860px) {
+  .nav-links > a:not(.btn) { display: none; }
+  .hamburger { display: flex; }
+  .about-grid, .contact-grid { grid-template-columns: 1fr; }
+  .about-cards { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .about-cards { grid-template-columns: 1fr; }
+  .cta-row .btn { flex: 1 1 auto; }
+}
+/* Below 480px, logo + Resume pill + theme toggle + hamburger no longer fit
+   the bar (none of the three flex groups in .nav-inner can shrink below
+   their content minimum — the pill's text can't wrap, and the icon buttons
+   are fixed pixel sizes) — the overflow pushed the hamburger, and often the
+   theme toggle, past the visible edge of the viewport, on nearly every
+   phone in portrait. The Resume pill is the one redundant element (it's
+   already in the mobile menu below, and behind the "R" shortcut), so it's
+   what gives way here — nothing becomes unreachable. */
+@media (max-width: 480px) {
+  .nav-links .btn { display: none; }
+}
+
+/* =========================================================
+   Case-study pages (projects/*.html) share these tokens/components
+   plus the small set below.
+   ========================================================= */
+.case-hero { padding: calc(var(--sp-24) + 2rem) 0 var(--sp-12); border-bottom: 1px solid var(--border); }
+.case-back { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-soft); display: inline-flex; align-items: center; gap: 0.4rem; margin-bottom: var(--sp-6); }
+.case-back:hover { color: var(--accent); }
+.case-hero h1 { font-size: var(--fs-2xl); margin-bottom: var(--sp-3); }
+.case-hero .tagline { color: var(--text-soft); font-size: var(--fs-md); max-width: 60ch; margin-bottom: var(--sp-6); }
+.case-meta { display: flex; flex-wrap: wrap; gap: var(--sp-3); margin-bottom: var(--sp-6); }
+.case-thumb {
+  aspect-ratio: 21 / 9;
+  border-radius: var(--radius-lg);
+  background: var(--ink-raised-2);
+  border: 1px solid var(--border);
+  position: relative;
+  margin-top: var(--sp-8);
+  overflow: hidden;
+}
+.case-thumb picture, .case-thumb img { width: 100%; height: 100%; display: block; }
+.case-thumb img { object-fit: cover; object-position: top; }
+/* Same cover component as the homepage project grid — see .cover-grid /
+   .cover-content in the Projects section rules — just bigger content
+   inset for the wider 21:9 frame. */
+.case-thumb .cover-content { left: var(--sp-8); bottom: var(--sp-8); right: var(--sp-8); }
+.case-thumb .cover-badge { width: 42px; height: 42px; font-size: 0.8rem; border-radius: 11px; }
+.case-thumb .cover-title { font-size: var(--fs-lg); }
+.case-body { padding: var(--sp-16) 0; max-width: 760px; margin: 0 auto; }
+.case-section { margin-bottom: var(--sp-12); }
+.case-section h2 { font-size: var(--fs-xl); margin-bottom: var(--sp-4); }
+.case-section p { color: var(--text-soft); font-size: var(--fs-md); margin-bottom: var(--sp-3); }
+.case-section ul { margin-top: var(--sp-3); }
+.case-section li { position: relative; padding-left: var(--sp-6); margin-bottom: 0.6rem; color: var(--text-soft); }
+.case-section li::before { content: "—"; position: absolute; left: 0; color: var(--accent); }
+.case-nav { display: flex; justify-content: space-between; gap: var(--sp-4); padding-top: var(--sp-8); border-top: 1px solid var(--border); flex-wrap: wrap; }
+
+/* Simple always-visible top nav for case-study pages (no hamburger needed) */
+.case-top-links { display: flex; align-items: center; gap: var(--sp-4); flex-wrap: wrap; }
+.case-top-links a:not(.btn) { font-size: var(--fs-sm); color: var(--text-soft); }
+.case-top-links a:not(.btn):hover { color: var(--text); }
+
+/* =========================================================
+   Motion system — page-load entrance, scroll stagger, ambient
+   background motion, magnetic buttons, page transitions.
+   Everything here animates only transform/opacity (GPU-friendly,
+   no layout thrash) and is fully neutralised by the global
+   prefers-reduced-motion rule near the top of this file.
+   ========================================================= */
+
+/* ---- Staggered scroll reveal ----
+   .reveal elements fade+slide in (base rule, defined earlier).
+   Grouping a set of them under [data-stagger] adds a per-child
+   delay via nth-child, so a grid/list cascades in instead of
+   popping in as one flat block. */
+[data-stagger] > .reveal:nth-child(1) { transition-delay: 0ms; }
+[data-stagger] > .reveal:nth-child(2) { transition-delay: 70ms; }
+[data-stagger] > .reveal:nth-child(3) { transition-delay: 140ms; }
+[data-stagger] > .reveal:nth-child(4) { transition-delay: 210ms; }
+[data-stagger] > .reveal:nth-child(5) { transition-delay: 280ms; }
+[data-stagger] > .reveal:nth-child(6) { transition-delay: 350ms; }
+[data-stagger] > .reveal:nth-child(n+7) { transition-delay: 420ms; }
+
+/* ---- Page-load sequence ----
+   One deliberate cascade, not several competing entrances: navbar, then
+   badge, then headline, then description, then CTA, then the stats row,
+   then the photo — each offset by a flat 50ms, each 700ms,
+   ease-out-expo throughout. Runs once, immediately, independent of
+   scroll — the hero is visible on first paint so it shouldn't wait for
+   an observer. */
+header.nav { opacity: 0; transform: translateY(-8px); animation: heroIn 700ms var(--ease-out-expo) forwards; }
+.hero-copy > * { opacity: 0; transform: translateY(14px); animation: heroIn 700ms var(--ease-out-expo) forwards; }
+.hero-copy > *:nth-child(1) { animation-delay: 60ms; }   /* badge: hero-facts — one 60ms step after the navbar */
+/* The headline reveals itself line-by-line (see the premium reveal rules
+   further down) instead of as one block, so it opts out of the generic
+   child entrance above rather than being animated twice — its own lines
+   are timed to start at the same 100ms slot this sequence would give it. */
+.hero-copy > h1 { opacity: 1; transform: none; animation: none; }
+.hero-copy > *:nth-child(3) { animation-delay: 420ms; }  /* description — continues the same 60ms grid past the 5-line headline (120–360ms) */
+.hero-copy > *:nth-child(4) { animation-delay: 480ms; }  /* CTA */
+.hero-copy > *:nth-child(5) { animation-delay: 540ms; }  /* stats row */
+/* Photo fades in only — its transform is owned entirely by the mouse/scroll
+   depth rule below. An `animation` and a plain `transform` rule fighting
+   over the same element's transform is exactly what silently broke the old
+   mouse-parallax on this element; opacity-only here avoids that. */
+.hero-visual { opacity: 0; animation: heroFadeIn 700ms var(--ease-out-expo) 600ms forwards; }
+@keyframes heroIn { to { opacity: 1; transform: translateY(0) scale(1); } }
+@keyframes heroFadeIn { to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  header.nav { animation: none !important; opacity: 1 !important; transform: none !important; }
+}
+
+/* ---- Hero ambient background ----
+   One layer, not several: the mesh gradient (below) is the only
+   background system. Earlier drafts also had a glow layer and a
+   set of large floating circles — removed deliberately, they were
+   redundant with the mesh and read as visual noise competing with
+   the headline and photo, the opposite of the intent here. */
+.hero { position: relative; overflow: hidden; }
+.hero-grid, .hero > .container { position: relative; z-index: 1; }
+
+/* ---- Animated gradient text (used sparingly, one phrase in the hero) ---- */
+/* Static gradient, deliberately not animated — a moving gradient
+   on headline text fights readability and reads as trying too
+   hard. The fixed gradient still reads as premium on its own. */
+.gradient-text {
+  background: linear-gradient(100deg, var(--accent) 0%, var(--success) 60%);
+  color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+/* ---- Magnetic CTA buttons ----
+   JS sets transform: translate(x,y) on mousemove within bounds; that
+   transition is what gives the "magnetic" lag/spring feel and eases the
+   snap-back to (0,0) on mouseleave. translate/box-shadow are listed
+   alongside it (not left to .btn's transition) because a `transition`
+   shorthand from one rule fully replaces another of equal specificity
+   rather than merging — without this, the hover lift would snap instead
+   of easing on exactly the two buttons where it matters most. */
+.magnetic {
+  transition: transform 220ms cubic-bezier(0.2, 0.8, 0.2, 1), translate 320ms var(--ease-out-expo), box-shadow 320ms var(--ease-out-expo);
+  will-change: transform;
+}
+
+/* ---- Form: focus lift + shake on invalid ---- */
+.form-input:focus { transform: translateY(-1px); }
+.form-input.shake { animation: fieldShake 360ms ease; }
+@keyframes fieldShake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-4px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); }
+}
+.btn.is-sending { animation: btnPulse 480ms ease; }
+@keyframes btnPulse {
+  0%, 100% { transform: translateY(-1px) scale(1); }
+  50% { transform: translateY(-1px) scale(0.97); }
+}
+
+/* ---- Cross-page transitions (View Transitions API, progressive
+   enhancement — no-op in browsers that don't support it, no JS
+   required). Applies to same-origin navigations between index.html
+   and the /projects/*.html case studies. ---- */
+@view-transition { navigation: auto; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+  header.nav, .hero-copy > *, .hero-visual { animation: none !important; opacity: 1 !important; transform: none !important; }
 }
+
+/* =========================================================
+   Depth layer — mesh gradient backdrop, line-by-line headline
+   reveal, scroll-driven hero recede. One consolidated
+   requestAnimationFrame loop in scripts.js drives the parallax
+   transforms here; nothing else attaches its own per-frame
+   handler. All of it is skipped outright on coarse pointers /
+   prefers-reduced-motion via JS feature checks — the CSS
+   reduced-motion guards here are the second layer.
+   ========================================================= */
+
+/* ---- Mesh gradient (hero backdrop) ----
+   One soft, quiet wash — toned down deliberately (lower opacity,
+   lower color saturation, gentler drift) so it reads as ambient
+   light behind the headline and photo, not a colored effect
+   competing for attention. This is the only background system
+   in the hero now. */
+.hero-mesh {
+  position: absolute;
+  inset: -20% -10%;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(78px);
+  opacity: 0.4;
+}
+.hero-mesh span {
+  position: absolute;
+  border-radius: 999px;
+  mix-blend-mode: normal;
+}
+.hero-mesh .m1 { width: 46%; height: 60%; top: 0%; left: 4%; background: color-mix(in srgb, var(--accent) 20%, transparent); animation: meshDrift1 26s ease-in-out infinite; }
+.hero-mesh .m2 { width: 38%; height: 50%; top: 30%; left: 52%; background: color-mix(in srgb, var(--success) 14%, transparent); animation: meshDrift2 30s ease-in-out infinite; }
+.hero-mesh .m3 { width: 34%; height: 44%; top: 46%; left: 20%; background: color-mix(in srgb, var(--accent-strong) 12%, transparent); animation: meshDrift3 23s ease-in-out infinite; }
+@keyframes meshDrift1 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(3%, 4%) scale(1.05); } }
+@keyframes meshDrift2 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-4%, -3%) scale(0.97); } }
+@keyframes meshDrift3 { 0%, 100% { transform: translate(0, 0) scale(1); } 50% { transform: translate(3%, -4%) scale(1.03); } }
+
+/* Mesh, photo, and text all respond to mouse position via --px/--py
+   (JS, range -1..1), added to the --hero-scroll depth value above on
+   the same axis rather than competing for it. Speed is layered by
+   depth: mesh (background) moves least, photo (midground) moves a
+   little more — capped at 6px from the mouse and 20px from scroll —
+   text (foreground, see .hero-copy above) moves the most. */
+.hero-mesh { transform: translate3d(calc(var(--px, 0) * -10px), calc(var(--py, 0) * -8px + var(--hero-scroll, 0) * -12px), 0); will-change: transform; }
+.hero-visual { transform: translate3d(calc(var(--px, 0) * 6px), calc(var(--py, 0) * 6px + var(--hero-scroll, 0) * -20px), 0); will-change: transform; }
+@media (prefers-reduced-motion: reduce) {
+  .hero-mesh, .hero-mesh span, .hero-visual { animation: none !important; transform: none !important; }
+}
+
+/* ---- Premium line-by-line headline reveal ----
+   Each phrase sits in an overflow-hidden mask; the inner line slides up
+   from just below its own baseline while fading in — the Linear/Stripe
+   "line reveal," not a per-character cascade. Pure CSS, page-load timed,
+   no JS or per-character DOM split required. */
+.hero h1 .line-mask { display: block; overflow: hidden; }
+.hero h1 .line-inner {
+  display: block;
+  transform: translateY(112%);
+  opacity: 0;
+  animation: lineReveal 700ms var(--ease-out-expo) forwards;
+}
+/* One 60ms grid for the whole hero: navbar 0 → badge 60 → these five
+   lines at 120/180/240/300/360 → description 420 → CTA 480 → stats 540
+   → photo 600 (see the page-load sequence above and .hero-visual below).
+   The headline's five short lines are five steps on that same grid, not
+   a separate faster rhythm. */
+.hero h1 .line-mask:nth-child(1) .line-inner { animation-delay: 120ms; }
+.hero h1 .line-mask:nth-child(2) .line-inner { animation-delay: 180ms; }
+.hero h1 .line-mask:nth-child(3) .line-inner { animation-delay: 240ms; }
+.hero h1 .line-mask:nth-child(4) .line-inner { animation-delay: 300ms; }
+.hero h1 .line-mask:nth-child(5) .line-inner { animation-delay: 360ms; }
+@keyframes lineReveal { to { transform: translateY(0); opacity: 1; } }
+@media (prefers-reduced-motion: reduce) {
+  .hero h1 .line-inner { animation: none !important; opacity: 1 !important; transform: none !important; }
+}
+
+/* ---- Scroll-driven hero depth ----
+   --hero-scroll (0..1, set by JS from scroll position within the hero's
+   height) drives transform + opacity only — no filter, no blur. Text,
+   photo, and background mesh each move at a different fraction of it
+   (see the mouse/scroll block further down for photo + mesh), so the
+   hero reads as layered depth settling back, not a page fading to mush. */
+.hero-copy {
+  transform: translate3d(0, calc(var(--hero-scroll, 0) * -40px), 0) scale(calc(1 - var(--hero-scroll, 0) * 0.04));
+  opacity: calc(1 - var(--hero-scroll, 0) * 0.15);
+  transform-origin: left top;
+  will-change: transform, opacity;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-copy { transform: none !important; opacity: 1 !important; }
+}
+
+
